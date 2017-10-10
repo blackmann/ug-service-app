@@ -1,9 +1,11 @@
 package com.integratorsb2b.ug.login
 
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.integratorsb2b.ug.R
+import com.integratorsb2b.ug.createaccount.CreateAccountActivity
 import com.integratorsb2b.ug.databinding.ActivityLoginBinding
 
 
@@ -16,10 +18,14 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
     }
 
     override fun showCreateAccount() {
-        TODO("not implemented")
+        startActivity(Intent(this, CreateAccountActivity::class.java))
     }
 
     override fun showForgotPassword() {
+        TODO("not implemented")
+    }
+
+    override fun showHome() {
         TODO("not implemented")
     }
 

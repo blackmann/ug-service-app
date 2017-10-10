@@ -8,6 +8,7 @@ interface LoginContract {
     interface View : BaseContract.View<LoginContract.Presenter> {
         fun showCreateAccount()
         fun showForgotPassword()
+        fun showHome()
     }
 
     interface Presenter : BaseContract.Presenter {
