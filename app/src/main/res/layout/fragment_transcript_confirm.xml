@@ -4,17 +4,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView
-        style="@style/AppTheme.Label"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/margin_8"
-        android:text="@string/student_number" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

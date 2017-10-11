@@ -26,6 +26,33 @@
                 android:paddingBottom="@dimen/margin_16"
                 android:text="@string/verify" />
 
+            <TextView
+                style="@style/AppTheme.Label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/margin_8"
+                android:text="@string/action" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/request_for_transcript"
+                android:id="@+id/purpose"
+                android:paddingBottom="@dimen/margin_8"/>
+
+            <TextView
+                style="@style/AppTheme.Label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/margin_8"
+                android:text="@string/student_number" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/sample_student_id" />
+
+
             <FrameLayout
                 android:id="@+id/fragment_container"
                 android:layout_width="match_parent"
@@ -61,7 +88,8 @@
                     <TextView
                         android:id="@+id/total_amount"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:text="@string/sample_amount" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -79,7 +107,8 @@
                     <TextView
                         android:id="@+id/service_charge"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:text="@string/sample_small_amount" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -99,7 +128,8 @@
                     android:id="@+id/grand_total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"/>
+                    android:text="@string/sample_amount"
+                    android:textSize="20sp" />
             </LinearLayout>
 
         </LinearLayout>

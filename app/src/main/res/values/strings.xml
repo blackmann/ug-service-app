@@ -33,9 +33,14 @@
     <string name="momo_number_hint">10-digit mobile money number</string>
     <string name="payment_method">Payment Method</string>
     <string name="review_details">Review Details</string>
-    <string name="verify">Please verify if the details you provided are correct.</string>
+    <string name="verify">Please verify if the details you provided are correct. If not, please go back to previous screens and make the corrections</string>
     <string name="payment">Payment</string>
     <string name="total_amount">Total Amount</string>
     <string name="service_charge">Service Charge</string>
     <string name="grand_total">Grand Total</string>
+    <string name="sample_student_id">UG718A9807Y</string>
+    <string name="sample_amount">GHS 210.00</string>
+    <string name="sample_small_amount">GHS 1.20</string>
+    <string name="confirm_charge_info">You will be charged after you confirm the details on the next screen</string>
+    <string name="action">Action</string>
 </resources>
