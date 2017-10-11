@@ -13,4 +13,16 @@
     <string name="name_hint"><![CDATA[Full name (First name & last name)]]></string>
     <string name="email_address">Email address</string>
     <string name="phone_number">Phone number</string>
+    <string name="option_intro">What do you want to do?</string>
+    <string name="tap">Tap a choice to continue</string>
+    <string name="apply_for_resit">Apply for Resit</string>
+    <string name="request_for_transcript">Request for Transcript</string>
+    <string name="tap_next">Tap here to continue</string>
+    <string name="setting_up">Setting up. Please wait…</string>
+    <string name="form_info">Please complete the form below</string>
+    <string name="fields_required">All fields are required</string>
+    <string name="level">Level</string>
+    <string name="type_of_programme">Type of Programme</string>
+    <string name="number_of_credit_hours">Number of Credit hours</string>
+    <string name="student_number">Student Number</string>
 </resources>
