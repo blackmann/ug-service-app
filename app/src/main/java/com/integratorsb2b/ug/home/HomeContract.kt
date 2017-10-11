@@ -13,7 +13,6 @@ interface HomeContract {
     interface Presenter: BaseContract.Presenter {
         fun applyResit()
         fun requestTranscript()
-        fun next()
         fun itemChecked()
     }
 }

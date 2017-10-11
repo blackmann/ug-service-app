@@ -25,4 +25,7 @@
     <string name="type_of_programme">Type of Programme</string>
     <string name="number_of_credit_hours">Number of Credit hours</string>
     <string name="student_number">Student Number</string>
+    <string name="post_by_mail">Post by mail</string>
+    <string name="pick_up">Pick up</string>
+    <string name="full_postal_address">Full Postal Address</string>
 </resources>

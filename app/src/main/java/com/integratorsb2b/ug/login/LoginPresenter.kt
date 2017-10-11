@@ -7,6 +7,14 @@ import android.util.Log
 
 class LoginPresenter(var context: Context,
                      var view: LoginContract.View) : LoginContract.Presenter {
+    override fun next() {
+        TODO("not implemented")
+    }
+
+    override fun begin() {
+        TODO("not implemented")
+    }
+
     val tag: String = "LoginPresenter"
 
     var username: ObservableField<String> = ObservableField("")

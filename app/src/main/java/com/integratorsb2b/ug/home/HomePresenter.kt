@@ -6,6 +6,9 @@ import android.widget.Toast
 import com.integratorsb2b.ug.R
 
 class HomePresenter(private val context: Context, val view: HomeContract.View): HomeContract.Presenter {
+    override fun begin() {
+        TODO("not implemented")
+    }
 
     private var checkedId: Int = 0
 
@@ -14,7 +17,7 @@ class HomePresenter(private val context: Context, val view: HomeContract.View): 
     }
 
     override fun requestTranscript() {
-        TODO("not implemented")
+        view.showRequestTranscript()
     }
 
     override fun next() {

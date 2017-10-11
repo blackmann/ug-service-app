@@ -7,13 +7,20 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
+import com.integratorsb2b.ug.Payload
 import com.integratorsb2b.ug.R
 import com.integratorsb2b.ug.databinding.ActivityResitBinding
+import com.integratorsb2b.ug.payment.PaymentActivity
 import com.jaredrummler.materialspinner.MaterialSpinner
 
 class ResitActivity : AppCompatActivity(), ResitContract.View {
 
     lateinit var localPresenter: ResitContract.Presenter
+
+
+    override fun showPaymentForm(payload: Payload?) {
+        PaymentActivity.start(this, payload)
+    }
 
     override fun setPresenter(presenter: ResitContract.Presenter) {
         localPresenter = presenter

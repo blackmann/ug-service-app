@@ -8,6 +8,7 @@ interface BaseContract {
     }
 
     interface Presenter {
-
+        fun begin()
+        fun next()
     }
 }

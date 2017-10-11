@@ -1,6 +1,7 @@
 package com.integratorsb2b.ug.resit
 
 import android.content.Context
+import com.integratorsb2b.ug.Payload
 
 class ResitPresenter(private val context: Context,
                      private val view: ResitContract.View) : ResitContract.Presenter {
@@ -16,7 +17,8 @@ class ResitPresenter(private val context: Context,
     }
 
     override fun next() {
-        TODO("not implemented")
+        val payload = Payload("resit")
+        view.showPaymentForm(payload)
     }
 
     override fun begin() {

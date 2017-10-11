@@ -19,6 +19,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".resit.ResitActivity"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden"
+            android:label="@string/apply_for_resit"/>
+        <activity android:name=".transcript.TranscriptActivity"
+            android:label="@string/request_for_transcript"/>
+        <activity android:name=".payment.PaymentActivity" />
     </application>
 </manifest>

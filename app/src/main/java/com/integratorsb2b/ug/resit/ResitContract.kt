@@ -1,6 +1,7 @@
 package com.integratorsb2b.ug.resit
 
 import com.integratorsb2b.ug.BaseContract
+import com.integratorsb2b.ug.Payload
 
 interface ResitContract {
 
@@ -16,5 +17,6 @@ interface ResitContract {
         fun hideLoading()
         fun setLevelOptions(options: Array<String>)
         fun setProgrammeOptions(programmes: Array<String>)
+        fun showPaymentForm(payload: Payload? = null)
     }
 }

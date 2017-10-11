@@ -104,6 +104,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
                 android:layout_margin="@dimen/margin_16"
+                android:id="@+id/next"
+                android:onClick="@{()->presenter.next()}"
                 android:src="@drawable/ic_next" />
         </android.support.design.widget.CoordinatorLayout>
 

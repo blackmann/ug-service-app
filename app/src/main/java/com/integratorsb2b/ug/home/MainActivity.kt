@@ -10,11 +10,10 @@ import android.support.v7.app.AppCompatActivity
 import com.integratorsb2b.ug.R
 import com.integratorsb2b.ug.databinding.ActivityMainBinding
 import com.integratorsb2b.ug.resit.ResitActivity
+import com.integratorsb2b.ug.transcript.TranscriptActivity
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
 
 class MainActivity : AppCompatActivity(), HomeContract.View {
-
-    private val tutorialsConfiguration = "tutorials_conf"
 
     private lateinit var localPresenter: HomeContract.Presenter
 
@@ -27,19 +26,11 @@ class MainActivity : AppCompatActivity(), HomeContract.View {
     }
 
     override fun showRequestTranscript() {
-        TODO("not implemented")
+        startActivity(Intent(this, TranscriptActivity::class.java))
     }
 
-    private val tutorialShown: String = "tutorial_shown"
-
     override fun showNextTutorial() {
-        val prefs: SharedPreferences = getSharedPreferences(tutorialsConfiguration, Context.MODE_PRIVATE)
-        val nextTutorialShown = prefs.getBoolean(tutorialShown, false)
-        if (!nextTutorialShown) {
-            showTapTarget()
-
-            prefs.edit().putBoolean(tutorialShown, true).apply()
-        }
+        showTapTarget()
     }
 
     private fun showTapTarget() {
