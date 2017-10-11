@@ -2,12 +2,21 @@ package com.integratorsb2b.ug.payment
 
 import android.content.Context
 import android.content.Intent
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View
+import android.widget.LinearLayout
 import com.integratorsb2b.ug.Payload
+import com.integratorsb2b.ug.R
+import com.integratorsb2b.ug.confirmation.ConfirmationActivity
+import com.integratorsb2b.ug.databinding.ActivityPaymentBinding
+import com.jaredrummler.materialspinner.MaterialSpinner
 
 
 class PaymentActivity : AppCompatActivity(), PaymentContract.View {
+
+    private lateinit var localPresenter: PaymentContract.Presenter
 
     companion object {
         val payloadKey = "ug_payload_key"
@@ -21,24 +30,52 @@ class PaymentActivity : AppCompatActivity(), PaymentContract.View {
 
 
     override fun showMomoForm() {
-        TODO("not implemented")
+        findViewById<LinearLayout>(R.id.mobile_money_form)
+                .visibility = View.VISIBLE
+
+        findViewById<LinearLayout>(R.id.card_form)
+                .visibility = View.GONE
     }
 
     override fun showCardForm() {
-        TODO("not implemented")
+        findViewById<LinearLayout>(R.id.mobile_money_form)
+                .visibility = View.GONE
+
+        findViewById<LinearLayout>(R.id.card_form)
+                .visibility = View.VISIBLE
     }
 
-    override fun showConfirmation() {
-        TODO("not implemented")
+    override fun showConfirmation(payload: Payload) {
+        ConfirmationActivity.start(this, payload)
     }
 
 
     override fun setPresenter(presenter: PaymentContract.Presenter) {
-        TODO("not implemented")
+        localPresenter = presenter
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val payload = intent.getSerializableExtra(payloadKey) as Payload?
+        setPresenter(PaymentPresenter(this, this))
+        if (payload != null) {
+            localPresenter.setPayload(payload)
+        }
+        val binding: ActivityPaymentBinding =
+                DataBindingUtil.setContentView(this, R.layout.activity_payment)
+
+        binding.presenter = localPresenter as PaymentPresenter
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        setPaymentOptions()
+    }
+
+    private fun setPaymentOptions() {
+        val paymentOptionsView: MaterialSpinner =
+                findViewById(R.id.payment_methods)
+
+        val paymentOptions = arrayListOf("MTN Mobile Money", "Airtel Money", "Tigo Cash",
+                "VISA", "Mastercard")
+        paymentOptionsView.setItems(paymentOptions)
     }
 }

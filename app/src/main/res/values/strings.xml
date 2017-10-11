@@ -28,4 +28,10 @@
     <string name="post_by_mail">Post by mail</string>
     <string name="pick_up">Pick up</string>
     <string name="full_postal_address">Full Postal Address</string>
+    <string name="select_a_payment_choice">Select a Payment Choice</string>
+    <string name="momo_warn">If you choose to use Mobile Money method, you will be asked to confirm with your PIN on the phone with the number you specify.</string>
+    <string name="momo_number_hint">10-digit mobile money number</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="review_details">Review Details</string>
+    <string name="verify">Please verify if the details you provided are correct.</string>
 </resources>
