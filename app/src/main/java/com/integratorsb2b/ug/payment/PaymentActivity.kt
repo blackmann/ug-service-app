@@ -5,6 +5,7 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import com.integratorsb2b.ug.Payload
@@ -77,5 +78,12 @@ class PaymentActivity : AppCompatActivity(), PaymentContract.View {
         val paymentOptions = arrayListOf("MTN Mobile Money", "Airtel Money", "Tigo Cash",
                 "VISA", "Mastercard")
         paymentOptionsView.setItems(paymentOptions)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

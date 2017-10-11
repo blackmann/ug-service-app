@@ -34,4 +34,8 @@
     <string name="payment_method">Payment Method</string>
     <string name="review_details">Review Details</string>
     <string name="verify">Please verify if the details you provided are correct.</string>
+    <string name="payment">Payment</string>
+    <string name="total_amount">Total Amount</string>
+    <string name="service_charge">Service Charge</string>
+    <string name="grand_total">Grand Total</string>
 </resources>

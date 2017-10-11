@@ -3,6 +3,7 @@ package com.integratorsb2b.ug.transcript
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import com.integratorsb2b.ug.Payload
@@ -51,6 +52,13 @@ class TranscriptActivity: AppCompatActivity(), TranscriptContract.View {
 
         binding.presenter = localPresenter as TranscriptPresenter
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }
