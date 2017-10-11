@@ -3,9 +3,13 @@ package com.integratorsb2b.ug.resit
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.MenuItem
+import android.view.View
+import android.widget.LinearLayout
 import com.integratorsb2b.ug.R
 import com.integratorsb2b.ug.databinding.ActivityResitBinding
+import com.jaredrummler.materialspinner.MaterialSpinner
 
 class ResitActivity : AppCompatActivity(), ResitContract.View {
 
@@ -16,7 +20,32 @@ class ResitActivity : AppCompatActivity(), ResitContract.View {
     }
 
     override fun showFetchLoading() {
-        TODO("not implemented")
+        findViewById<LinearLayout>(R.id.waiting)
+                ?.visibility = View.VISIBLE
+    }
+
+    override fun hideLoading() {
+        findViewById<LinearLayout>(R.id.waiting)
+                ?.visibility = View.GONE
+    }
+
+    override fun setLevelOptions(options: Array<String>) {
+        val levelOptionsView: MaterialSpinner =
+                findViewById(R.id.levels)
+
+        levelOptionsView.setItems(options.asList())
+        levelOptionsView.setOnItemSelectedListener { _, _, _, item ->
+            localPresenter.setLevel(item as String)
+        }
+    }
+
+    override fun setProgrammeOptions(programmes: Array<String>) {
+        val programmeOptionsView: MaterialSpinner =
+                findViewById(R.id.programmes)
+
+        programmeOptionsView.setItems(programmes.asList())
+        programmeOptionsView.setOnItemSelectedListener { _, _, _, item ->
+            localPresenter.setProgramme(item as String) }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +57,9 @@ class ResitActivity : AppCompatActivity(), ResitContract.View {
         binding.presenter = localPresenter as ResitPresenter
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        // let's begin the drama
+        localPresenter.begin()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

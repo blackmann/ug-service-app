@@ -44,6 +44,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingBottom="@dimen/margin_8"
+                        style="@style/AppTheme.Label"
                         android:text="@string/level" />
 
                     <com.jaredrummler.materialspinner.MaterialSpinner
@@ -56,11 +57,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingBottom="@dimen/margin_8"
+                        style="@style/AppTheme.Label"
                         android:text="@string/type_of_programme" />
 
                     <com.jaredrummler.materialspinner.MaterialSpinner
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:id="@+id/programmes"
                         android:layout_marginBottom="@dimen/margin_8" />
 
                     <LinearLayout
@@ -72,6 +75,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            style="@style/AppTheme.Label"
                             android:paddingRight="@dimen/margin_16"
                             android:text="@string/number_of_credit_hours" />
 
@@ -84,6 +88,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        style="@style/AppTheme.Label"
                         android:text="@string/student_number" />
 
                     <EditText
