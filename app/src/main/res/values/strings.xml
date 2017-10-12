@@ -47,4 +47,6 @@
     <string name="expiry">Expiry</string>
     <string name="cvv">CVV</string>
     <string name="_09_17">09/17</string>
+    <string name="retry">Retry</string>
+    <string name="connection_failed">Connection failed. Please retry</string>
 </resources>

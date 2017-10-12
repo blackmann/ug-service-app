@@ -35,4 +35,6 @@ dependencies {
     implementation 'com.android.support:design:26.1.0'
     compile 'uk.co.samuelwall:material-tap-target-prompt:2.1.0'
     compile 'com.jaredrummler:material-spinner:1.2.1'
+    compile 'com.android.volley:volley:1.0.0'
+    compile 'com.github.salomonbrys.kotson:kotson:2.5.0'
 }

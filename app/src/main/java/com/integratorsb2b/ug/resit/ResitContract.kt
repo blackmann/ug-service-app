@@ -15,8 +15,10 @@ interface ResitContract {
     interface View: BaseContract.View<Presenter> {
         fun showFetchLoading()
         fun hideLoading()
-        fun setLevelOptions(options: Array<String>)
-        fun setProgrammeOptions(programmes: Array<String>)
+        fun setLevelOptions(options: List<String>)
+        fun setProgrammeOptions(programmes: List<String>)
         fun showPaymentForm(payload: Payload? = null)
+        fun showNoConnectionError()
+        fun hideRetryControl()
     }
 }

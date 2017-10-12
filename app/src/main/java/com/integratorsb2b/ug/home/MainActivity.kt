@@ -1,10 +1,9 @@
 package com.integratorsb2b.ug.home
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.os.Handler
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
 import com.integratorsb2b.ug.R
@@ -15,10 +14,11 @@ import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
 
 class MainActivity : AppCompatActivity(), HomeContract.View {
 
-    private lateinit var localPresenter: HomeContract.Presenter
+    private lateinit var presenter: HomeContract.Presenter
+    private var tapShown = false
 
     override fun setPresenter(presenter: HomeContract.Presenter) {
-        localPresenter = presenter
+        this.presenter = presenter
     }
 
     override fun showApplyResit() {
@@ -34,11 +34,15 @@ class MainActivity : AppCompatActivity(), HomeContract.View {
     }
 
     private fun showTapTarget() {
-        MaterialTapTargetPrompt.Builder(this)
+        if (tapShown) return
+        val tapTarget = MaterialTapTargetPrompt.Builder(this)
                 .setTarget(findViewById<FloatingActionButton>(R.id.next))
                 .setPrimaryText(R.string.tap_next)
                 .create()
-                .show()
+
+        Handler().postDelayed({ tapTarget.show() }, 800)
+
+        tapShown = true
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +51,6 @@ class MainActivity : AppCompatActivity(), HomeContract.View {
         val binding: ActivityMainBinding =
                 DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        binding.presenter = localPresenter as HomePresenter
+        binding.presenter = presenter as HomePresenter
     }
 }
