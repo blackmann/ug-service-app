@@ -46,4 +46,5 @@
     <string name="card_number">Card Number</string>
     <string name="expiry">Expiry</string>
     <string name="cvv">CVV</string>
+    <string name="_09_17">09/17</string>
 </resources>

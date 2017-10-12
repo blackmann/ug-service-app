@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.integratorsb2b.ug.Payload
 import com.integratorsb2b.ug.Payload.PaymentOptions.Companion.airtelMoney
 import com.integratorsb2b.ug.Payload.PaymentOptions.Companion.masterCard
@@ -21,8 +22,28 @@ import com.jaredrummler.materialspinner.MaterialSpinner
 
 
 class PaymentActivity : AppCompatActivity(), PaymentContract.View {
+    override fun showCvvError() {
+        Toast.makeText(this, "Please enter a valid cvv. It can be found at the back of your card.", Toast.LENGTH_SHORT)
+                .show()
+    }
+
+    override fun showPhoneNumberError() {
+        Toast.makeText(this, "Please enter a valid phone number", Toast.LENGTH_SHORT)
+                .show()
+    }
+
+    override fun showExpiryError() {
+        Toast.makeText(this, "Please enter the expiry of your card in the format MM/YY; eg 09/17",
+                Toast.LENGTH_LONG).show()
+    }
+
+    override fun showCardNumberError() {
+        Toast.makeText(this, "Please provide a valid card number",
+                Toast.LENGTH_SHORT).show()
+    }
 
     private lateinit var localPresenter: PaymentContract.Presenter
+    private lateinit var payload: Payload
 
     companion object {
         val payloadKey = "ug_payload_key"
@@ -51,7 +72,7 @@ class PaymentActivity : AppCompatActivity(), PaymentContract.View {
                 .visibility = View.VISIBLE
     }
 
-    override fun showConfirmation(payload: Payload) {
+    override fun showConfirmation() {
         ConfirmationActivity.start(this, payload)
     }
 
@@ -62,11 +83,11 @@ class PaymentActivity : AppCompatActivity(), PaymentContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val payload = intent.getSerializableExtra(payloadKey) as Payload?
+        payload = intent.getSerializableExtra(payloadKey) as Payload
         PaymentPresenter(this, this)
-        if (payload != null) {
-            localPresenter.setPayload(payload)
-        }
+
+        localPresenter.setPayload(payload)
+
         val binding: ActivityPaymentBinding =
                 DataBindingUtil.setContentView(this, R.layout.activity_payment)
 
