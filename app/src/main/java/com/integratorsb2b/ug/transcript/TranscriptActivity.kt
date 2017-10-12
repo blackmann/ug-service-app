@@ -2,10 +2,12 @@ package com.integratorsb2b.ug.transcript
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.integratorsb2b.ug.Payload
 import com.integratorsb2b.ug.R
 import com.integratorsb2b.ug.databinding.ActivityTranscriptBinding
@@ -13,7 +15,19 @@ import com.integratorsb2b.ug.payment.PaymentActivity
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
 
 
-class TranscriptActivity: AppCompatActivity(), TranscriptContract.View {
+class TranscriptActivity : AppCompatActivity(), TranscriptContract.View {
+    override fun showFormError() {
+        Toast.makeText(this,
+                "Please provide a valid Student Number and choose a delivery choice.",
+                Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showPostalAddressNotSpecifiedError() {
+        Toast.makeText(this,
+                "Please enter a full postal address.", Toast.LENGTH_SHORT)
+                .show()
+    }
+
     override fun hidePostalForm() {
         findViewById<LinearLayout>(R.id.postalForm)
                 .visibility = View.GONE
@@ -25,11 +39,13 @@ class TranscriptActivity: AppCompatActivity(), TranscriptContract.View {
     }
 
     override fun showNextTap() {
-        MaterialTapTargetPrompt.Builder(this)
+        val tapTarget: MaterialTapTargetPrompt = MaterialTapTargetPrompt.Builder(this)
                 .setTarget(R.id.next)
                 .setPrimaryText("Tap here to continue to Payment")
                 .create()
-                .show()
+
+        Handler().postDelayed({ tapTarget.show() }, 900)
+        Handler().postDelayed({ tapTarget.finish() }, 2500)
     }
 
     override fun showPaymentForm(payload: Payload?) {

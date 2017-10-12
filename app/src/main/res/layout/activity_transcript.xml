@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -45,25 +46,29 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text" />
+                    android:text="@={presenter.studentNumber}"
+                    android:inputType="text"
+                    app:addTextChangedListener="@{presenter.onTextChanged}"/>
 
                 <RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:paddingTop="@dimen/margin_16"
-                    android:paddingBottom="@dimen/margin_16">
+                    android:paddingBottom="@dimen/margin_16"
+                    android:onCheckedChanged="@{presenter.deliveryChoiceListener}">
 
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingRight="@dimen/margin_16"
-                        android:checked="true"
+                        android:id="@+id/post"
                         android:text="@string/post_by_mail" />
 
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:id="@+id/pickup"
                         android:text="@string/pick_up" />
                 </RadioGroup>
 
@@ -71,7 +76,8 @@
                     android:id="@+id/postalForm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         style="@style/AppTheme.Label"
@@ -82,6 +88,8 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:addTextChangedListener="@{presenter.onTextChanged}"
+                        android:text="@={presenter.postalAddress}"
                         android:inputType="textPostalAddress|textMultiLine" />
                 </LinearLayout>
 
