@@ -20,5 +20,7 @@ interface ResitContract {
         fun showPaymentForm(payload: Payload? = null)
         fun showNoConnectionError()
         fun hideRetryControl()
+        fun showNoStudentNumberError()
+        fun showInvalidCreditHoursError()
     }
 }

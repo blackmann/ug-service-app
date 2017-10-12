@@ -7,7 +7,7 @@ import com.integratorsb2b.ug.R
 import com.integratorsb2b.ug.databinding.ActivityCreateAccountBinding
 
 
-class CreateAccountActivity: AppCompatActivity(),
+class CreateAccountActivity : AppCompatActivity(),
         CreateAccountContract.View {
     override fun setPresenter(presenter: CreateAccountContract.Presenter) {
         TODO("not implemented")
@@ -23,7 +23,6 @@ class CreateAccountActivity: AppCompatActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: ActivityCreateAccountBinding =
-                DataBindingUtil.setContentView(this, R.layout.activity_create_account)
+        DataBindingUtil.setContentView<ActivityCreateAccountBinding>(this, R.layout.activity_create_account)
     }
 }

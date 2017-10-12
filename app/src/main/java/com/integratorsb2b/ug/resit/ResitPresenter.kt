@@ -1,17 +1,24 @@
 package com.integratorsb2b.ug.resit
 
 import android.content.Context
+import android.databinding.ObservableField
 import com.android.volley.*
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.github.salomonbrys.kotson.fromJson
 import com.google.gson.Gson
 import com.integratorsb2b.ug.Payload
+import com.integratorsb2b.ug.Util
 
 class ResitPresenter(private val context: Context,
                      private val view: ResitContract.View) : ResitContract.Presenter {
-    lateinit var selectedLevel: String
-    lateinit var selectedProgramme: String
+
+    var unitCost: ObservableField<String> = ObservableField()
+    var creditHours: ObservableField<String> = ObservableField("1")
+    var studentNumber: ObservableField<String> = ObservableField()
+
+    private lateinit var selectedLevel: String
+    private lateinit var selectedProgramme: String
     private var retries = 0
 
     private val chargesRequestTag = "charges_t_"
@@ -29,24 +36,48 @@ class ResitPresenter(private val context: Context,
     }
 
     private fun getProgrammeOptions(level: String): List<String> {
-        val chargesList = chargesMap[level]
 
         val programmes: ArrayList<String> = ArrayList()
-        if (chargesList != null) {
-            for (c in chargesList) {
-                programmes.add(c.facultyName)
-            }
-        }
+        chargesMap[level]?.mapTo(programmes) { it.facultyName }
 
         return programmes
     }
 
     override fun setProgramme(programme: String) {
         selectedProgramme = programme
+        unitCost.set("Charge per credit hour is GHS " + getCharge())
+    }
+
+    private fun getCharge(): Double {
+        val chargeList: ArrayList<Charge>? = chargesMap[selectedLevel]
+
+        if (chargeList != null) {
+            for (c in chargeList) {
+                if (c.facultyName == selectedProgramme) {
+                    return c.creditCharges[0].price
+                }
+            }
+        }
+
+        return 0.0
     }
 
     override fun next() {
         val payload = Payload("resit")
+
+        if (!Util.isValidStudentNumber(studentNumber)) {
+            view.showNoStudentNumberError()
+            return
+        }
+
+        if (creditHours.get() == null || creditHours.get().isEmpty() || creditHours.get().toInt() < 1) {
+            view.showInvalidCreditHoursError()
+            return
+        }
+
+        payload.form.put("creditHours", creditHours.get().toInt())
+        payload.form.put("faculty", selectedProgramme)
+        payload.form.put("category", selectedLevel)
         view.showPaymentForm(payload)
     }
 

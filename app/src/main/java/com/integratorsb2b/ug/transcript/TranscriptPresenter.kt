@@ -8,6 +8,7 @@ import android.widget.RadioGroup
 import android.widget.Toast
 import com.integratorsb2b.ug.Payload
 import com.integratorsb2b.ug.R
+import com.integratorsb2b.ug.Util
 
 
 class TranscriptPresenter(private val context: Context,
@@ -29,13 +30,13 @@ class TranscriptPresenter(private val context: Context,
     override fun next() {
         val payload = Payload("transcript")
 
-        if (!isValidStudentNumber() || deliveryChoice == 0) {
+        if (!Util.isValidStudentNumber(studentNumber) || deliveryChoice == 0) {
             view.showFormError()
             return
         }
         // check for the delivery
         var deliveryType = "pickup"
-        if (deliveryChoice == R.id.post && !isValidPostalAddress()) {
+        if (deliveryChoice == R.id.post && !Util.isValidPostalAddress(postalAddress)) {
             view.showPostalAddressNotSpecifiedError()
             return
         } else deliveryType = "delivery"
@@ -58,19 +59,10 @@ class TranscriptPresenter(private val context: Context,
         shouldTap()
     }
 
-    private fun isValidPostalAddress(): Boolean {
-        return postalAddress.get() != null && postalAddress.get().trim().length > 5
-    }
-
-    private fun isValidStudentNumber(): Boolean {
-        return studentNumber.get() != null && studentNumber.get().trim().length > 4
-    }
-
     private fun shouldTap() {
-        val studentNumber = this.studentNumber.get()
         val postalAddress = this.postalAddress.get()
 
-        if (!isValidStudentNumber()) {
+        if (!Util.isValidStudentNumber(this.studentNumber)) {
             return
         }
 
@@ -78,6 +70,7 @@ class TranscriptPresenter(private val context: Context,
             return
         }
 
+        val studentNumber = this.studentNumber.get()
         // showing tap is reliant on the student number being supplied
         if (studentNumber.length > 3) {
             when (deliveryChoice) {
