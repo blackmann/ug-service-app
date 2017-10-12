@@ -43,4 +43,7 @@
     <string name="sample_small_amount">GHS 1.20</string>
     <string name="confirm_charge_info">You will be charged after you confirm the details on the next screen</string>
     <string name="action">Action</string>
+    <string name="card_number">Card Number</string>
+    <string name="expiry">Expiry</string>
+    <string name="cvv">CVV</string>
 </resources>

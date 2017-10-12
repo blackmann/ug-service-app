@@ -36,16 +36,17 @@
                     android:text="@string/momo_warn" />
 
                 <TextView
+                    style="@style/AppTheme.Label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/AppTheme.Label"
-                    android:text="@string/payment_method"
-                    android:paddingBottom="@dimen/margin_8"/>
+                    android:paddingBottom="@dimen/margin_8"
+                    android:text="@string/payment_method" />
+
                 <com.jaredrummler.materialspinner.MaterialSpinner
                     android:id="@+id/payment_methods"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_16"/>
+                    android:layout_marginBottom="@dimen/margin_16" />
 
                 <LinearLayout
                     android:id="@+id/mobile_money_form"
@@ -61,25 +62,83 @@
 
                     <EditText
                         android:id="@+id/phone_number"
-                        android:inputType="phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/momo_number_hint" />
+                        android:hint="@string/momo_number_hint"
+                        android:inputType="phone" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/card_form"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <TextView
+                        style="@style/AppTheme.Label"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/card_number" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_8"
+                        android:inputType="numberSigned" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/AppTheme.Label"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/expiry" />
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="date" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/AppTheme.Label"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/cvv" />
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="numberSigned" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
                 </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/confirm_charge_info"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp" />
 
             </LinearLayout>
         </ScrollView>
@@ -89,7 +148,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/margin_16"
-            android:src="@drawable/ic_next"
-            android:onClick="@{() -> presenter.next()}"/>
+            android:onClick="@{() -> presenter.next()}"
+            android:src="@drawable/ic_next" />
     </android.support.design.widget.CoordinatorLayout>
 </layout>

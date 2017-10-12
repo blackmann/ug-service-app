@@ -23,4 +23,13 @@ class PaymentPresenter(private val context: Context, private val view: PaymentCo
     override fun setPayload(payload: Payload) {
         localPayload = payload
     }
+
+    override fun setPaymentChoice(choice: String) {
+        when (choice) {
+            Payload.PaymentOptions.visa,
+            Payload.PaymentOptions.masterCard -> view.showCardForm()
+            
+            else -> view.showMomoForm()
+        }
+    }
 }

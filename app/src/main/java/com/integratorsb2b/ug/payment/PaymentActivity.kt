@@ -9,6 +9,11 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import com.integratorsb2b.ug.Payload
+import com.integratorsb2b.ug.Payload.PaymentOptions.Companion.airtelMoney
+import com.integratorsb2b.ug.Payload.PaymentOptions.Companion.masterCard
+import com.integratorsb2b.ug.Payload.PaymentOptions.Companion.mtnMomo
+import com.integratorsb2b.ug.Payload.PaymentOptions.Companion.tigoCash
+import com.integratorsb2b.ug.Payload.PaymentOptions.Companion.visa
 import com.integratorsb2b.ug.R
 import com.integratorsb2b.ug.confirmation.ConfirmationActivity
 import com.integratorsb2b.ug.databinding.ActivityPaymentBinding
@@ -75,9 +80,12 @@ class PaymentActivity : AppCompatActivity(), PaymentContract.View {
         val paymentOptionsView: MaterialSpinner =
                 findViewById(R.id.payment_methods)
 
-        val paymentOptions = arrayListOf("MTN Mobile Money", "Airtel Money", "Tigo Cash",
-                "VISA", "Mastercard")
+        val paymentOptions = arrayListOf(mtnMomo, airtelMoney, tigoCash,
+                visa, masterCard)
         paymentOptionsView.setItems(paymentOptions)
+        paymentOptionsView.setOnItemSelectedListener { _, _, _, item ->
+            localPresenter.setPaymentChoice(item as String)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

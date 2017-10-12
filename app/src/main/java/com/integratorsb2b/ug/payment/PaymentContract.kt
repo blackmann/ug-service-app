@@ -8,6 +8,7 @@ interface PaymentContract {
 
     interface Presenter: BaseContract.Presenter {
         fun setPayload(payload: Payload)
+        fun setPaymentChoice(choice: String)
     }
 
     interface View: BaseContract.View<Presenter> {
