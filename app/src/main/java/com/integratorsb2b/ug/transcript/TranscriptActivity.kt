@@ -45,7 +45,8 @@ class TranscriptActivity: AppCompatActivity(), TranscriptContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setPresenter(TranscriptPresenter(this, this))
+        // initialize the presenter
+        TranscriptPresenter(this, this)
 
         val binding: ActivityTranscriptBinding =
                 DataBindingUtil.setContentView(this, R.layout.activity_transcript)

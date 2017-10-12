@@ -8,6 +8,10 @@ class ResitPresenter(private val context: Context,
     lateinit var selectedLevel: String
     lateinit var selectedProgramme: String
 
+    init {
+        view.setPresenter(this)
+    }
+
     override fun setLevel(level: String) {
         selectedLevel = level
     }

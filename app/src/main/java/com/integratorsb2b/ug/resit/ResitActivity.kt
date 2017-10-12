@@ -57,7 +57,8 @@ class ResitActivity : AppCompatActivity(), ResitContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setPresenter(ResitPresenter(this, this))
+        // initialize the presenter
+        ResitPresenter(this, this)
 
         val binding: ActivityResitBinding =
                 DataBindingUtil.setContentView(this, R.layout.activity_resit)

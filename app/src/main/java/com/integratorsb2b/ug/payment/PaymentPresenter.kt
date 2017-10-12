@@ -6,7 +6,11 @@ import com.integratorsb2b.ug.Payload
 
 class PaymentPresenter(private val context: Context, private val view: PaymentContract.View) :
         PaymentContract.Presenter {
-    lateinit var localPayload: Payload
+    private lateinit var localPayload: Payload
+
+    init {
+        view.setPresenter(this)
+    }
 
     override fun begin() {
         TODO("not implemented")

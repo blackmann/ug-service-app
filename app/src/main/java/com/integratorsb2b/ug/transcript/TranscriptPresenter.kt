@@ -6,6 +6,10 @@ import com.integratorsb2b.ug.Payload
 
 class TranscriptPresenter(private val context: Context,
                           private val view: TranscriptContract.View): TranscriptContract.Presenter {
+    init {
+        view.setPresenter(this)
+    }
+
     override fun begin() {
         TODO("not implemented")
     }

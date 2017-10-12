@@ -58,7 +58,7 @@ class PaymentActivity : AppCompatActivity(), PaymentContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val payload = intent.getSerializableExtra(payloadKey) as Payload?
-        setPresenter(PaymentPresenter(this, this))
+        PaymentPresenter(this, this)
         if (payload != null) {
             localPresenter.setPayload(payload)
         }
