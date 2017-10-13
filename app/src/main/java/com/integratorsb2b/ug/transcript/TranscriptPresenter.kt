@@ -44,7 +44,7 @@ class TranscriptPresenter(private val context: Context,
             deliveryType = "delivery"
         }
 
-        payload.form.put("studentNumber", studentNumber.get().trim())
+        payload.form.put("indexNumber", studentNumber.get().trim())
         payload.form.put("deliveryChoice", deliveryType)
 
         if (deliveryChoice == R.id.post) {

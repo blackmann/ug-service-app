@@ -9,8 +9,8 @@ class Payload(val type: String, val form: HashMap<String, Any> = HashMap()) : Se
         companion object {
             val mtnMomo = "MTN Mobile Money"
             val airtelMoney = "Airtel Money"
-            val visa = "Visa"
-            val masterCard = "MasterCard"
+            val visa = "visa"
+            val masterCard = "mastercard"
             val tigoCash = "Tigo Cash"
 
         }

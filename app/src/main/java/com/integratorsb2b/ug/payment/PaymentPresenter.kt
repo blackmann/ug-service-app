@@ -2,6 +2,13 @@ package com.integratorsb2b.ug.payment
 
 import android.content.Context
 import android.databinding.ObservableField
+import android.util.Log
+import com.android.volley.Request
+import com.android.volley.VolleyError
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.github.salomonbrys.kotson.fromJson
+import com.google.gson.Gson
 import com.integratorsb2b.ug.Payload
 import java.util.regex.Pattern
 
@@ -10,7 +17,9 @@ class PaymentPresenter(private val context: Context, private val view: PaymentCo
         PaymentContract.Presenter {
     private lateinit var payload: Payload
 
-    private var paymentChoice: String = Payload.PaymentOptions.mtnMomo // default
+    private lateinit var paymentChoice: String
+
+    private lateinit var paymentOptions: ArrayList<PaymentOption>
 
     var cardNumber: ObservableField<String> = ObservableField()
     var cvv: ObservableField<String> = ObservableField()
@@ -23,11 +32,39 @@ class PaymentPresenter(private val context: Context, private val view: PaymentCo
     }
 
     override fun begin() {
-        TODO("not implemented")
+        getPaymentOptions()
+    }
+
+    private fun getPaymentOptions() {
+        view.showWait()
+        val requestQueue = Volley.newRequestQueue(context)
+
+        val request = StringRequest(Request.Method.GET, "https://ugapp-integratorsb2b.herokuapp.com/api/ug/paymentoption",
+                {response -> handleResponse(response) },
+                {error -> handleError(error)})
+
+        requestQueue.add(request)
+    }
+
+    private fun handleResponse(response: String) {
+        view.hideWait()
+        paymentOptions = Gson().fromJson(response)
+
+        // now inform the view
+        val options: ArrayList<String> = ArrayList()
+        for (p in paymentOptions) {
+            options.add(p.paymentOptionName[0].key)
+        }
+
+        view.setPaymentOptions(options)
+    }
+
+    private fun handleError(error: VolleyError) {
+        view.showConnectionError()
     }
 
     override fun next() {
-        when (paymentChoice) {
+        when (paymentChoice.toLowerCase()) {
             Payload.PaymentOptions.visa,
             Payload.PaymentOptions.masterCard -> processCardForm(paymentChoice)
 
@@ -55,12 +92,23 @@ class PaymentPresenter(private val context: Context, private val view: PaymentCo
         val cvv: String = this.cvv.get()
         val expiry: String = this.expiry.get()
 
-        payload.form.put("payment_method", paymentChoice)
-        payload.form.put("card_number", cardNumber)
+        payload.form.put("paymentMethod", getPaymentCode(paymentChoice))
+        payload.form.put("cardNumber", cardNumber)
         payload.form.put("cvv", cvv)
-        payload.form.put("expiry", expiry)
+        payload.form.put("expiryDate", expiry)
 
         view.showReceipt()
+    }
+
+    private fun getPaymentCode(paymentChoice: String): String {
+        for (p in paymentOptions) {
+            val paymentName = p.paymentOptionName[0]
+            if (paymentName.key == paymentChoice) {
+                return paymentName.value
+            }
+        }
+
+        return ""
     }
 
     private fun isValidCvv(): Boolean {
@@ -81,8 +129,8 @@ class PaymentPresenter(private val context: Context, private val view: PaymentCo
             return
         }
 
-        payload.form.put("mobile_number", phoneNumber.get())
-        payload.form.put("payment_method", paymentChoice)
+        payload.form.put("phoneNumber", phoneNumber.get())
+        payload.form.put("paymentMethod", getPaymentCode(paymentChoice))
 
         view.showReceipt()
     }
@@ -93,11 +141,15 @@ class PaymentPresenter(private val context: Context, private val view: PaymentCo
 
     override fun setPaymentChoice(choice: String) {
         paymentChoice = choice
-        when (choice) {
+        when (choice.toLowerCase()) {
             Payload.PaymentOptions.visa,
             Payload.PaymentOptions.masterCard -> view.showCardForm()
 
             else -> view.showMomoForm()
         }
     }
+
+    class PaymentOptionName(val value: String, val key: String)
+
+    class PaymentOption(val paymentOptionName: ArrayList<PaymentOptionName>)
 }

@@ -79,6 +79,9 @@ class ConfirmationActivity : AppCompatActivity() {
 
         findViewById<FloatingActionButton>(R.id.done)
                 .visibility = View.GONE
+
+        findViewById<Button>(R.id.retry)
+                .isEnabled = false
     }
 
     private fun showError() {
@@ -151,12 +154,14 @@ class ConfirmationActivity : AppCompatActivity() {
     }
 
     private fun showPaymentScreen() {
+        payload.form.put("serviceCharge", serviceCharge)
+        payload.form.put("totalAmount", totalAmount)
         PaymentActivity.start(this, payload)
     }
 
     private fun setFields() {
         // set the student number
-        val studentNumber: String = payload.form["studentNumber"] as String
+        val studentNumber: String = payload.form["indexNumber"] as String
         findViewById<TextView>(R.id.student_number)
                 .setText(studentNumber)
 
@@ -185,7 +190,6 @@ class ConfirmationActivity : AppCompatActivity() {
         totalAmount = charge * creditHours
         findViewById<TextView>(R.id.total_amount)
                 .setText(String.format("GHS %.2f", totalAmount))
-
 
         setGrandTotal()
     }

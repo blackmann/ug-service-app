@@ -8,154 +8,202 @@
             type="com.integratorsb2b.ug.payment.PaymentPresenter" />
     </data>
 
-    <android.support.design.widget.CoordinatorLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
+        <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/margin_16">
-
-                <TextView
-                    style="@style/AppTheme.Title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/margin_8"
-                    android:text="@string/select_a_payment_choice" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/margin_16"
-                    android:text="@string/momo_warn" />
-
-                <TextView
-                    style="@style/AppTheme.Label"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/margin_8"
-                    android:text="@string/payment_method" />
-
-                <com.jaredrummler.materialspinner.MaterialSpinner
-                    android:id="@+id/payment_methods"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_16" />
+                android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:id="@+id/mobile_money_form"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="@dimen/margin_16">
+
+                    <TextView
+                        style="@style/AppTheme.Title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="@dimen/margin_8"
+                        android:text="@string/select_a_payment_choice" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="@dimen/margin_16"
+                        android:text="@string/momo_warn" />
 
                     <TextView
                         style="@style/AppTheme.Label"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/phone_number" />
+                        android:paddingBottom="@dimen/margin_8"
+                        android:text="@string/payment_method" />
 
-                    <EditText
-                        android:id="@+id/phone_number"
+                    <com.jaredrummler.materialspinner.MaterialSpinner
+                        android:id="@+id/payment_methods"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/momo_number_hint"
-                        android:text="@={presenter.phoneNumber}"
-                        android:maxLength="10"
-                        android:inputType="phone" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/card_form"
-                    android:visibility="gone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/AppTheme.Label"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/card_number" />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@={presenter.cardNumber}"
-                        android:layout_marginBottom="@dimen/margin_8"
-                        android:inputType="numberSigned" />
+                        android:layout_marginBottom="@dimen/margin_16" />
 
                     <LinearLayout
+                        android:id="@+id/mobile_money_form"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:baselineAligned="false"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-                        <LinearLayout
-                            android:layout_width="0dp"
+                        <TextView
+                            style="@style/AppTheme.Label"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:text="@string/phone_number" />
 
-                            <TextView
-                                style="@style/AppTheme.Label"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/expiry" />
-
-                            <EditText
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="@string/_09_17"
-                                android:text="@={presenter.expiry}"
-                                android:inputType="date" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
+                        <EditText
+                            android:id="@+id/phone_number"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                style="@style/AppTheme.Label"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/cvv" />
-
-                            <EditText
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@={presenter.cvv}"
-                                android:maxLength="3"
-                                android:inputType="numberSigned" />
-
-                        </LinearLayout>
-
+                            android:hint="@string/momo_number_hint"
+                            android:text="@={presenter.phoneNumber}"
+                            android:maxLength="10"
+                            android:inputType="phone" />
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/card_form"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/AppTheme.Label"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/card_number" />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@={presenter.cardNumber}"
+                            android:layout_marginBottom="@dimen/margin_8"
+                            android:inputType="numberSigned" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:baselineAligned="false"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    style="@style/AppTheme.Label"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/expiry" />
+
+                                <EditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/_09_17"
+                                    android:text="@={presenter.expiry}"
+                                    android:inputType="date" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    style="@style/AppTheme.Label"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/cvv" />
+
+                                <EditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@={presenter.cvv}"
+                                    android:maxLength="3"
+                                    android:inputType="numberSigned" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/confirm_charge_info"
+                        android:textSize="12sp" />
+
                 </LinearLayout>
+            </ScrollView>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/confirm_charge_info"
-                    android:textSize="12sp" />
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/margin_16"
+                android:onClick="@{() -> presenter.next()}"
+                android:src="@drawable/ic_next" />
+        </android.support.design.widget.CoordinatorLayout>
 
-            </LinearLayout>
-        </ScrollView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_16"
+            android:visibility="gone"
+            android:background="@android:color/white"
+            android:id="@+id/waiting">
 
-        <android.support.design.widget.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/margin_16"
-            android:onClick="@{() -> presenter.next()}"
-            android:src="@drawable/ic_next" />
-    </android.support.design.widget.CoordinatorLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_8"
+                android:contentDescription="@string/image"
+                android:src="@drawable/ic_wait" />
+
+            <TextView
+                style="@style/AppTheme.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/margin_16"
+                android:id="@+id/info"
+                android:text="@string/setting_up" />
+
+            <ProgressBar
+                style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:id="@+id/progress"
+                android:indeterminate="true" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/retry"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:layout_gravity="end"
+                android:id="@+id/retry"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/margin_16"/>
+
+        </LinearLayout>
+    </FrameLayout>
 </layout>

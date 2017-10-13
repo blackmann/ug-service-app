@@ -19,5 +19,9 @@ interface PaymentContract {
         fun showExpiryError()
         fun showCardNumberError()
         fun showCvvError()
+        fun showWait()
+        fun hideWait()
+        fun showConnectionError()
+        fun setPaymentOptions(paymentOptions: ArrayList<String>)
     }
 }
