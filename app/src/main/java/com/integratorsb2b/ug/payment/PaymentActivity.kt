@@ -4,15 +4,22 @@ import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.design.widget.BottomSheetDialog
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
+import com.android.volley.Request
+import com.android.volley.VolleyError
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.integratorsb2b.ug.Payload
 import com.integratorsb2b.ug.R
 import com.integratorsb2b.ug.databinding.ActivityPaymentBinding
 import com.jaredrummler.materialspinner.MaterialSpinner
+import java.util.regex.Pattern
 
 
 class PaymentActivity : AppCompatActivity(), PaymentContract.View {
@@ -75,6 +82,7 @@ class PaymentActivity : AppCompatActivity(), PaymentContract.View {
 
     private lateinit var presenter: PaymentContract.Presenter
     private lateinit var payload: Payload
+    private var dialog: AlertDialog? = null
 
     companion object {
         val payloadKey = "ug_payload_key"
@@ -105,8 +113,70 @@ class PaymentActivity : AppCompatActivity(), PaymentContract.View {
 
     override fun showReceipt() {
         Log.i("data", payload.form.toString())
+
+        val dialogView: View = layoutInflater.inflate(R.layout.payment_confirm, null)
+
+        val bottomSheet = BottomSheetDialog(this)
+        bottomSheet.setContentView(dialogView)
+        bottomSheet.show()
+
+        val followUpNumberEntry = bottomSheet.findViewById<EditText>(R.id.follow_up_number)
+        dialogView.findViewById<Button>(R.id.send)
+                .setOnClickListener({
+                    addFollowUpNumberAndSend(followUpNumberEntry?.text.toString())
+                    bottomSheet.dismiss()
+                })
     }
 
+    private fun addFollowUpNumberAndSend(entry: String) {
+        if (!Pattern.matches("\\d{10}", entry)) {
+            Toast.makeText(this, "Please enter a valid phone number.", Toast.LENGTH_SHORT)
+                    .show()
+            return
+        }
+
+        payload.form.put("phoneNumber", entry)
+
+        sendForm(payload)
+    }
+
+    private fun sendForm(payload: Payload?) {
+        if (payload == null) return
+
+        val requestQueue = Volley.newRequestQueue(this)
+        val request = object : StringRequest(Request.Method.POST,
+                "https://ugapp-integratorsb2b.herokuapp.com/api/ug/resit/payment",
+                { response -> handleResponse(response) },
+                { error -> handleError(error) }) {
+            override fun getParams(): MutableMap<String, String> {
+                val params = HashMap<String, String>()
+                for (c in payload.form.keys) {
+                    params.put(c, payload.form[c].toString())
+                }
+
+                Log.i("data", params.toString())
+                return params
+            }
+        }
+
+        dialog = AlertDialog.Builder(this)
+                .setView(R.layout.view_sending)
+                .create()
+
+        dialog?.show()
+
+        requestQueue.add(request)
+    }
+
+    private fun handleError(error: VolleyError) {
+        dialog?.dismiss()
+        Toast.makeText(this, "Connection failed. Please try again.", Toast.LENGTH_SHORT)
+                .show()
+    }
+
+    private fun handleResponse(response: String) {
+        dialog?.dismiss()
+    }
 
     override fun setPresenter(presenter: PaymentContract.Presenter) {
         this.presenter = presenter

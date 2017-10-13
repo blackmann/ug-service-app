@@ -40,7 +40,7 @@
     <string name="sample_student_id">UG718A9807Y</string>
     <string name="sample_amount">GHS 0.00</string>
     <string name="sample_small_amount">GHS 0.00</string>
-    <string name="confirm_charge_info">You will be charged after you confirm the details on the next screen</string>
+    <string name="confirm_charge_info">You will be charged after you continue from here.</string>
     <string name="action">Action</string>
     <string name="card_number">Card Number</string>
     <string name="expiry">Expiry</string>
@@ -50,4 +50,9 @@
     <string name="connection_failed">Connection failed. Please retry</string>
     <string name="level">Student Category</string>
     <string name="faculty">Faculty</string>
+    <string name="finish">Finish</string>
+    <string name="finish_info">You will be charged from your account after this step. Please confirm payment with PIN if you chose to use any Mobile Money platform. \n\nPlease provide your mobile number for follow-up.</string>
+    <string name="follow_up_mobile_number">10-digit follow-up mobile number</string>
+    <string name="send">Send</string>
+    <string name="sending_please_wait">Sending. Please wait...</string>
 </resources>

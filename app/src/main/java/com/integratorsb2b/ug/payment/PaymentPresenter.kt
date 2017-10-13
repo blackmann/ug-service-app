@@ -129,7 +129,7 @@ class PaymentPresenter(private val context: Context, private val view: PaymentCo
             return
         }
 
-        payload.form.put("phoneNumber", phoneNumber.get())
+        payload.form.put("mobileMoneyNumber", phoneNumber.get())
         payload.form.put("paymentMethod", getPaymentCode(paymentChoice))
 
         view.showReceipt()
