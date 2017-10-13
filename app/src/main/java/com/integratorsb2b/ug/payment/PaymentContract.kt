@@ -14,7 +14,7 @@ interface PaymentContract {
     interface View: BaseContract.View<Presenter> {
         fun showMomoForm()
         fun showCardForm()
-        fun showConfirmation()
+        fun showReceipt()
         fun showPhoneNumberError();
         fun showExpiryError()
         fun showCardNumberError()

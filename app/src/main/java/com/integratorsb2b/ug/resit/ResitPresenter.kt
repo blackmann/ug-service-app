@@ -106,10 +106,11 @@ class ResitPresenter(private val context: Context,
         if (error is TimeoutError) {
             if (retries++ < 2) {
                 fetchConfigs()
+                return
             }
-        } else if (error is NoConnectionError) {
-            view.showNoConnectionError()
         }
+
+        view.showNoConnectionError()
     }
 
     private fun handleResponse(jsonResponse: String) {

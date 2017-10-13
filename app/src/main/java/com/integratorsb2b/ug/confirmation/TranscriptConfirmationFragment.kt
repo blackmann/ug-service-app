@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
+import android.widget.TextView
 import com.integratorsb2b.ug.Payload
 import com.integratorsb2b.ug.R
 
@@ -31,5 +33,9 @@ class TranscriptConfirmationFragment: Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val payload = arguments[payloadExtra] as Payload
+        val deliveryChoice = payload.form["deliveryChoice"] as String
+        view?.findViewById<RadioButton>(R.id.delivery_choice)
+                ?.setText(deliveryChoice)
     }
 }

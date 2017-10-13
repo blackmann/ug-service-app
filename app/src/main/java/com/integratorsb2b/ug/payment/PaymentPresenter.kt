@@ -60,7 +60,7 @@ class PaymentPresenter(private val context: Context, private val view: PaymentCo
         payload.form.put("cvv", cvv)
         payload.form.put("expiry", expiry)
 
-        view.showConfirmation()
+        view.showReceipt()
     }
 
     private fun isValidCvv(): Boolean {
@@ -84,7 +84,7 @@ class PaymentPresenter(private val context: Context, private val view: PaymentCo
         payload.form.put("mobile_number", phoneNumber.get())
         payload.form.put("payment_method", paymentChoice)
 
-        view.showConfirmation()
+        view.showReceipt()
     }
 
     override fun setPayload(payload: Payload) {

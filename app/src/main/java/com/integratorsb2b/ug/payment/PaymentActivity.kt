@@ -72,8 +72,8 @@ class PaymentActivity : AppCompatActivity(), PaymentContract.View {
                 .visibility = View.VISIBLE
     }
 
-    override fun showConfirmation() {
-        ConfirmationActivity.start(this, payload)
+    override fun showReceipt() {
+
     }
 
 
