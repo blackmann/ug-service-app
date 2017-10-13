@@ -7,7 +7,14 @@ import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import android.widget.TextView
+import android.view.View
+import android.widget.*
+import com.android.volley.Request
+import com.android.volley.VolleyError
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.github.salomonbrys.kotson.fromJson
+import com.google.gson.Gson
 import com.integratorsb2b.ug.Payload
 import com.integratorsb2b.ug.R
 import com.integratorsb2b.ug.payment.PaymentActivity
@@ -15,6 +22,8 @@ import com.integratorsb2b.ug.payment.PaymentActivity
 
 class ConfirmationActivity : AppCompatActivity() {
     private lateinit var payload: Payload
+    private var serviceCharge: Double = 0.0
+    private var totalAmount: Double = 0.0
 
     companion object {
         val payloadExtra = "ug_payload_extra"
@@ -37,8 +46,10 @@ class ConfirmationActivity : AppCompatActivity() {
         var fragment: Fragment? = null
         if (payload.type == "transcript") fragment =
                 TranscriptConfirmationFragment.getInstance(payload)
-        else if (payload.type == "resit") fragment =
-                ResitConfirmationFragment.getInstance(payload)
+        else if (payload.type == "resit") {
+            fragment = ResitConfirmationFragment.getInstance(payload)
+            loadServiceCharge()
+        }
 
         supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, fragment)
@@ -46,8 +57,97 @@ class ConfirmationActivity : AppCompatActivity() {
 
         setFields()
 
+        findViewById<Button>(R.id.retry)
+                .setOnClickListener { loadServiceCharge() }
+
         findViewById<FloatingActionButton>(R.id.done)
                 .setOnClickListener { showPaymentScreen() }
+    }
+
+    private fun showLoading() {
+        findViewById<LinearLayout>(R.id.waiting)
+                .visibility = View.VISIBLE
+
+        findViewById<Button>(R.id.retry)
+                .isEnabled = false
+
+        findViewById<TextView>(R.id.info)
+                .setText(R.string.setting_up)
+
+        findViewById<ProgressBar>(R.id.progress)
+                .visibility = View.VISIBLE
+
+        findViewById<FloatingActionButton>(R.id.done)
+                .visibility = View.GONE
+    }
+
+    private fun showError() {
+        Toast.makeText(this, "Connection failed. Please check your network and retry.",
+                Toast.LENGTH_LONG).show()
+
+        findViewById<Button>(R.id.retry)
+                .visibility = View.VISIBLE
+
+        findViewById<TextView>(R.id.info)
+                .setText(R.string.connection_failed)
+
+        findViewById<ProgressBar>(R.id.progress)
+                .visibility = View.GONE
+
+        findViewById<Button>(R.id.retry)
+                .isEnabled = true
+    }
+
+    private fun hideLoading() {
+        findViewById<LinearLayout>(R.id.waiting)
+                .visibility = View.GONE
+
+        findViewById<FloatingActionButton>(R.id.done)
+                .visibility = View.VISIBLE
+    }
+
+    private fun loadServiceCharge() {
+        val requestQueue = Volley.newRequestQueue(this)
+
+        val request = object : StringRequest(Request.Method.POST,
+                "https://ugapp-integratorsb2b.herokuapp.com/api/ug/resit/charges",
+                { response -> handleResponse(response) },
+                { error -> handleError(error) }) {
+            override fun getParams(): MutableMap<String, String> {
+                val params = HashMap<String, String>()
+                params.put("multiplier", (payload.form["creditHours"] as Int).toString())
+
+                return params
+            }
+        }
+
+        showLoading()
+        requestQueue.add(request)
+    }
+
+    private fun handleError(error: VolleyError) {
+        showError()
+    }
+
+    private fun handleResponse(response: String) {
+        hideLoading()
+
+        val data: HashMap<String, Double> = Gson().fromJson(response)
+        val serviceChargeTemp = data["serviceCharge"]
+        if (serviceChargeTemp != null) {
+            serviceCharge = serviceChargeTemp
+            updateServiceCharge()
+        }
+    }
+
+    private fun updateServiceCharge() {
+        setGrandTotal()
+        setServiceCharge()
+    }
+
+    private fun setServiceCharge() {
+        findViewById<TextView>(R.id.service_charge)
+                .setText(String.format("GHS %.2f", serviceCharge))
     }
 
     private fun showPaymentScreen() {
@@ -60,12 +160,12 @@ class ConfirmationActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.student_number)
                 .setText(studentNumber)
 
-        // set the purpose
-        val purposeView = findViewById<TextView>(R.id.purpose)
         when (payload.type) {
             "transcript" -> setTranscriptValues()
             "resit" -> setResitValues()
         }
+
+        updateServiceCharge()
     }
 
     private fun setPurpose(purposeString: Int) {
@@ -82,23 +182,19 @@ class ConfirmationActivity : AppCompatActivity() {
         val charge = payload.form["charge"] as Double
         val creditHours = payload.form["creditHours"] as Int
 
-        val totalAmount: Double = charge * creditHours
+        totalAmount = charge * creditHours
         findViewById<TextView>(R.id.total_amount)
                 .setText(String.format("GHS %.2f", totalAmount))
 
-        setGrandTotal(totalAmount)
+
+        setGrandTotal()
     }
 
-    private fun setGrandTotal(totalAmount: Double) {
-        val grand: Double = totalAmount + getServiceCharge()
+    private fun setGrandTotal() {
+        val grand: Double = totalAmount + serviceCharge
 
         findViewById<TextView>(R.id.grand_total)
                 .setText(String.format("GHS %.2f", grand))
-    }
-
-    private fun getServiceCharge(): Double {
-        return 1.20
-        // TODO this needs the right implementation
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
 import com.integratorsb2b.ug.R
 import com.integratorsb2b.ug.databinding.ActivityMainBinding
 import com.integratorsb2b.ug.resit.ResitActivity
@@ -16,6 +17,7 @@ class MainActivity : AppCompatActivity(), HomeContract.View {
 
     private lateinit var presenter: HomeContract.Presenter
     private var tapShown = false
+    private var shouldClose = false
 
     override fun setPresenter(presenter: HomeContract.Presenter) {
         this.presenter = presenter
@@ -52,5 +54,16 @@ class MainActivity : AppCompatActivity(), HomeContract.View {
                 DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         binding.presenter = presenter as HomePresenter
+    }
+
+    override fun onBackPressed() {
+        if (!shouldClose) {
+            shouldClose = true
+            Toast.makeText(this, "Press back again to close.", Toast.LENGTH_SHORT).show()
+            Handler().postDelayed({ shouldClose = false }, 2000)
+
+            return
+        }
+        super.onBackPressed()
     }
 }

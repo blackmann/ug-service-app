@@ -35,10 +35,14 @@ class TranscriptPresenter(private val context: Context,
         }
         // check for the delivery
         var deliveryType = "pickup"
-        if (deliveryChoice == R.id.post && !Util.isValidPostalAddress(postalAddress)) {
-            view.showPostalAddressNotSpecifiedError()
-            return
-        } else deliveryType = "delivery"
+        if (deliveryChoice == R.id.post) {
+            if (!Util.isValidPostalAddress(postalAddress)) {
+                view.showPostalAddressNotSpecifiedError()
+                return
+            }
+
+            deliveryType = "delivery"
+        }
 
         payload.form.put("studentNumber", studentNumber.get().trim())
         payload.form.put("deliveryChoice", deliveryType)
