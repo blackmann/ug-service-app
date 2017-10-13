@@ -80,7 +80,7 @@ class ResitPresenter(private val context: Context,
         payload.form.put("category", selectedLevel)
         payload.form.put("studentNumber", studentNumber.get())
         payload.form.put("charge", getCharge())
-        view.showPaymentForm(payload)
+        view.showConfirmation(payload)
     }
 
     override fun begin() {

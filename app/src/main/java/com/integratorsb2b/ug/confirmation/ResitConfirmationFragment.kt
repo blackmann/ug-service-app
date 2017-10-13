@@ -5,14 +5,15 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.integratorsb2b.ug.Payload
 import com.integratorsb2b.ug.R
 
 
-class ResitConfirmationFragment: Fragment() {
+class ResitConfirmationFragment : Fragment() {
 
     companion object {
-        public val payloadExtra = "ug_payload_extra"
+        val payloadExtra = "ug_payload_extra"
 
         fun getInstance(payload: Payload): ResitConfirmationFragment {
             val fragment = ResitConfirmationFragment()
@@ -31,5 +32,14 @@ class ResitConfirmationFragment: Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val payload = arguments[payloadExtra] as Payload
+
+        view?.findViewById<TextView>(R.id.faculty)?.setText(payload.form["faculty"] as String)
+        view?.findViewById<TextView>(R.id.level)?.setText(payload.form["category"] as String)
+
+        view?.findViewById<TextView>(R.id.credit_hours)
+                ?.setText(String.format("%d (at GHS %.2f per hour)",
+                        payload.form["creditHours"],
+                        payload.form["charge"]))
     }
 }

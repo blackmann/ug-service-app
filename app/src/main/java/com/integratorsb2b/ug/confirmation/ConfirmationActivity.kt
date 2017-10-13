@@ -3,12 +3,14 @@ package com.integratorsb2b.ug.confirmation
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.widget.TextView
 import com.integratorsb2b.ug.Payload
 import com.integratorsb2b.ug.R
+import com.integratorsb2b.ug.payment.PaymentActivity
 
 
 class ConfirmationActivity : AppCompatActivity() {
@@ -43,6 +45,13 @@ class ConfirmationActivity : AppCompatActivity() {
                 .commit()
 
         setFields()
+
+        findViewById<FloatingActionButton>(R.id.done)
+                .setOnClickListener { showPaymentScreen() }
+    }
+
+    private fun showPaymentScreen() {
+        PaymentActivity.start(this, payload)
     }
 
     private fun setFields() {

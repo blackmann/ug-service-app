@@ -17,7 +17,7 @@ interface ResitContract {
         fun hideLoading()
         fun setLevelOptions(options: List<String>)
         fun setProgrammeOptions(programmes: List<String>)
-        fun showPaymentForm(payload: Payload? = null)
+        fun showConfirmation(payload: Payload? = null)
         fun showNoConnectionError()
         fun hideRetryControl()
         fun showNoStudentNumberError()

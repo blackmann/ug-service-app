@@ -14,7 +14,7 @@ interface TranscriptContract {
         fun hidePostalForm()
         fun showPostalForm()
         fun showNextTap()
-        fun showPaymentForm(payload: Payload? = null)
+        fun showConfirmation(payload: Payload? = null)
         fun showFormError()
         fun showPostalAddressNotSpecifiedError()
     }

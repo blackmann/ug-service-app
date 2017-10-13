@@ -21,7 +21,6 @@
     <string name="setting_up">Setting up. Please wait…</string>
     <string name="form_info">Please complete the form below</string>
     <string name="fields_required">All fields are required</string>
-    <string name="level">Level</string>
     <string name="type_of_programme">Type of Programme</string>
     <string name="number_of_credit_hours">Number of Credit hours</string>
     <string name="student_number">Student Number</string>
@@ -49,4 +48,6 @@
     <string name="_09_17">09/17</string>
     <string name="retry">Retry</string>
     <string name="connection_failed">Connection failed. Please retry</string>
+    <string name="level">Level</string>
+    <string name="faculty">Faculty</string>
 </resources>

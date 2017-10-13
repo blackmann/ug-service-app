@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.integratorsb2b.ug.Payload
 import com.integratorsb2b.ug.R
+import com.integratorsb2b.ug.confirmation.ConfirmationActivity
 import com.integratorsb2b.ug.databinding.ActivityTranscriptBinding
 import com.integratorsb2b.ug.payment.PaymentActivity
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
@@ -48,8 +49,8 @@ class TranscriptActivity : AppCompatActivity(), TranscriptContract.View {
         Handler().postDelayed({ tapTarget.finish() }, 2500)
     }
 
-    override fun showPaymentForm(payload: Payload?) {
-        PaymentActivity.start(this, payload)
+    override fun showConfirmation(payload: Payload?) {
+        ConfirmationActivity.start(this, payload)
     }
 
     private lateinit var localPresenter: TranscriptContract.Presenter

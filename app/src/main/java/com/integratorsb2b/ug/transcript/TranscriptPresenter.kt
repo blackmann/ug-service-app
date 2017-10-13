@@ -5,7 +5,6 @@ import android.databinding.ObservableField
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.RadioGroup
-import android.widget.Toast
 import com.integratorsb2b.ug.Payload
 import com.integratorsb2b.ug.R
 import com.integratorsb2b.ug.Util
@@ -47,7 +46,7 @@ class TranscriptPresenter(private val context: Context,
         if (deliveryChoice == R.id.post) {
             payload.form.put("postalAddress", postalAddress.get())
         }
-        view.showPaymentForm(payload)
+        view.showConfirmation(payload)
     }
 
     private fun setDeliveryChoice(checkedId: Int) {
