@@ -78,6 +78,8 @@ class ResitPresenter(private val context: Context,
         payload.form.put("creditHours", creditHours.get().toInt())
         payload.form.put("faculty", selectedProgramme)
         payload.form.put("category", selectedLevel)
+        payload.form.put("studentNumber", studentNumber.get())
+        payload.form.put("charge", getCharge())
         view.showPaymentForm(payload)
     }
 

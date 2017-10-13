@@ -41,11 +41,11 @@ class TranscriptPresenter(private val context: Context,
             return
         } else deliveryType = "delivery"
 
-        payload.form.put("student_number", studentNumber.get().trim())
+        payload.form.put("studentNumber", studentNumber.get().trim())
         payload.form.put("deliveryChoice", deliveryType)
 
         if (deliveryChoice == R.id.post) {
-            payload.form.put("postal_address", postalAddress.get())
+            payload.form.put("postalAddress", postalAddress.get())
         }
         view.showPaymentForm(payload)
     }
