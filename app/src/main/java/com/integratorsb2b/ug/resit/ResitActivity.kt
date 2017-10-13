@@ -37,6 +37,9 @@ class ResitActivity : AppCompatActivity(), ResitContract.View {
 
         findViewById<ProgressBar>(R.id.progress)
                 .visibility = View.GONE
+
+        findViewById<Button>(R.id.retry)
+                .isEnabled = true
     }
 
     override fun hideRetryControl() {

@@ -87,7 +87,7 @@ class ResitPresenter(private val context: Context,
         fetchConfigs()
     }
 
-    private fun fetchConfigs() {
+    fun fetchConfigs() {
         view.hideRetryControl()
         view.showFetchLoading()
         val requestQueue: RequestQueue = Volley.newRequestQueue(context.applicationContext)
