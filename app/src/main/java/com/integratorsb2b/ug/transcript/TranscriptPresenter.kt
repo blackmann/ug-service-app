@@ -24,14 +24,7 @@ class TranscriptPresenter(private val context: Context,
     }
 
     override fun begin() {
-        val requestQueue = Volley.newRequestQueue(context)
-        val request = StringRequest(Request.Method.GET,
-                "https://ugapp-integratorsb2b.herokuapp.com/api/ug/transcript/type",
-                { response -> handleResponse(response) },
-                { error -> handleError(error) })
-
-        view.showWait()
-        requestQueue.add(request)
+        fetchConfigs()
     }
 
     fun fetchConfigs() {
@@ -102,7 +95,7 @@ class TranscriptPresenter(private val context: Context,
                 return
             }
 
-            payload.form.put("address", postalAddress.get())
+            payload.form.put("postalAddress", postalAddress.get())
         }
 
         payload.form.put("deliveryType", deliveryType)

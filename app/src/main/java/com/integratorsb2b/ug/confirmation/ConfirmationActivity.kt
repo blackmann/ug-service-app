@@ -180,6 +180,21 @@ class ConfirmationActivity : AppCompatActivity() {
 
     private fun setTranscriptValues() {
         setPurpose(R.string.request_for_transcript)
+        serviceCharge = payload.form["serviceCharge"] as Double
+
+        val actualCharge: Double = payload.form["actualCharge"] as Double
+        val postalCharge: Double = payload.form["postalCharge"] as Double
+
+        totalAmount = actualCharge + postalCharge
+
+        setTotalAmount()
+        updateServiceCharge()
+        setGrandTotal()
+    }
+
+    private fun setTotalAmount() {
+        findViewById<TextView>(R.id.total_amount)
+                .setText(String.format("GHS %.2f", totalAmount))
     }
 
     private fun setResitValues() {
@@ -188,8 +203,7 @@ class ConfirmationActivity : AppCompatActivity() {
         val creditHours = payload.form["creditHours"] as Int
 
         totalAmount = charge * creditHours
-        findViewById<TextView>(R.id.total_amount)
-                .setText(String.format("GHS %.2f", totalAmount))
+        setTotalAmount()
 
         setGrandTotal()
     }

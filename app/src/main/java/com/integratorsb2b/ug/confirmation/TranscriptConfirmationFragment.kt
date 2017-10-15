@@ -12,7 +12,7 @@ import com.integratorsb2b.ug.Payload
 import com.integratorsb2b.ug.R
 
 
-class TranscriptConfirmationFragment: Fragment() {
+class TranscriptConfirmationFragment : Fragment() {
 
     companion object {
         public val payloadExtra = "ug_payload_extra"
@@ -46,5 +46,11 @@ class TranscriptConfirmationFragment: Fragment() {
             view?.findViewById<LinearLayout>(R.id.postalForm)
                     ?.visibility = View.GONE
         }
+
+        val actualCharge = payload.form["actualCharge"] as Double
+        val postalCharge = payload.form["postalCharge"] as Double
+        view?.findViewById<TextView>(R.id.info)
+                ?.setText(String.format("Actual charge: GHS %.2f\nPostal Charge: GHS %.2f",
+                        actualCharge, postalCharge))
     }
 }

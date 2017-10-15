@@ -23,7 +23,8 @@
         android:id="@+id/postalForm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginBottom="@dimen/margin_8">
 
         <TextView
             style="@style/AppTheme.Label"
@@ -36,4 +37,11 @@
             android:layout_height="wrap_content"
             android:id="@+id/postal_address"/>
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/info"
+        android:lineSpacingMultiplier="1.5"
+        android:textColor="@android:color/black"/>
 </LinearLayout>
