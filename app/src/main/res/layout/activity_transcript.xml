@@ -3,106 +3,159 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="presenter"
-            type="com.integratorsb2b.ug.transcript.TranscriptPresenter"/>
+            type="com.integratorsb2b.ug.transcript.TranscriptPresenter" />
     </data>
 
-    <android.support.design.widget.CoordinatorLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
+        <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="@dimen/margin_16">
+            android:layout_height="match_parent">
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/margin_16">
-
-                <TextView
-                    style="@style/AppTheme.Title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/margin_8"
-                    android:text="@string/form_info" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/margin_8"
-                    android:text="@string/fields_required" />
-
-                <TextView
-                    style="@style/AppTheme.Label"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/margin_8"
-                    android:text="@string/student_number" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@={presenter.studentNumber}"
-                    android:inputType="text"
-                    app:addTextChangedListener="@{presenter.onTextChanged}"/>
-
-                <RadioGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingTop="@dimen/margin_16"
-                    android:paddingBottom="@dimen/margin_16"
-                    android:onCheckedChanged="@{presenter.deliveryChoiceListener}">
-
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingRight="@dimen/margin_16"
-                        android:id="@+id/post"
-                        android:text="@string/post_by_mail" />
-
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/pickup"
-                        android:text="@string/pick_up" />
-                </RadioGroup>
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/margin_16">
 
                 <LinearLayout
-                    android:id="@+id/postalForm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:padding="@dimen/margin_16">
+
+                    <TextView
+                        style="@style/AppTheme.Title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="@dimen/margin_8"
+                        android:text="@string/form_info" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="@dimen/margin_8"
+                        android:text="@string/fields_required" />
 
                     <TextView
                         style="@style/AppTheme.Label"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/full_postal_address" />
+                        android:paddingBottom="@dimen/margin_8"
+                        android:text="@string/student_number" />
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:addTextChangedListener="@{presenter.onTextChanged}"
-                        android:text="@={presenter.postalAddress}"
-                        android:inputType="textPostalAddress|textMultiLine" />
+                        android:layout_marginBottom="@dimen/margin_8"
+                        android:inputType="text"
+                        android:text="@={presenter.studentNumber}" />
+
+                    <TextView
+                        style="@style/AppTheme.Label"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_8"
+                        android:text="@string/delivery_choice" />
+
+                    <com.jaredrummler.materialspinner.MaterialSpinner
+                        android:id="@+id/delivery_choice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        style="@style/AppTheme.Label"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_8"
+                        android:text="@string/location" />
+
+                    <com.jaredrummler.materialspinner.MaterialSpinner
+                        android:id="@+id/location"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_16" />
+
+                    <LinearLayout
+                        android:id="@+id/postalForm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <TextView
+                            style="@style/AppTheme.Label"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/full_postal_address" />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPostalAddress|textMultiLine"
+                            android:text="@={presenter.postalAddress}" />
+                    </LinearLayout>
+
                 </LinearLayout>
+            </ScrollView>
 
-            </LinearLayout>
-        </ScrollView>
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/margin_16"
+                android:onClick="@{() -> presenter.next()}"
+                android:src="@drawable/ic_next" />
+        </android.support.design.widget.CoordinatorLayout>
 
-        <android.support.design.widget.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:id="@+id/next"
-            android:onClick="@{() -> presenter.next()}"
-            android:layout_margin="@dimen/margin_16"
-            android:src="@drawable/ic_next"/>
-    </android.support.design.widget.CoordinatorLayout>
+        <LinearLayout
+            android:id="@+id/waiting"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@android:color/white"
+            android:padding="@dimen/margin_16"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_8"
+                android:contentDescription="@string/image"
+                android:src="@drawable/ic_wait" />
+
+            <TextView
+                android:id="@+id/info"
+                style="@style/AppTheme.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/margin_16"
+                android:text="@string/setting_up" />
+
+            <ProgressBar
+                android:id="@+id/progress"
+                style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:indeterminate="true" />
+
+            <Button
+                android:id="@+id/retry"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="@dimen/margin_16"
+                android:onClick="@{() -> presenter.fetchConfigs()}"
+                android:text="@string/retry"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </FrameLayout>
+
 </layout>

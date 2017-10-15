@@ -2,109 +2,129 @@ package com.integratorsb2b.ug.transcript
 
 import android.content.Context
 import android.databinding.ObservableField
-import android.text.Editable
-import android.text.TextWatcher
-import android.widget.RadioGroup
+import com.android.volley.Request
+import com.android.volley.VolleyError
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.github.salomonbrys.kotson.fromJson
+import com.google.gson.Gson
 import com.integratorsb2b.ug.Payload
-import com.integratorsb2b.ug.R
 import com.integratorsb2b.ug.Util
 
 
 class TranscriptPresenter(private val context: Context,
                           private val view: TranscriptContract.View) : TranscriptContract.Presenter {
 
-    private var deliveryChoice: Int = 0
+    private lateinit var deliveryType: String
     var studentNumber: ObservableField<String> = ObservableField()
     var postalAddress: ObservableField<String> = ObservableField()
-    private var alreadyShown = false
 
     init {
         view.setPresenter(this)
     }
 
     override fun begin() {
-        TODO("not implemented")
+        val requestQueue = Volley.newRequestQueue(context)
+        val request = StringRequest(Request.Method.GET,
+                "https://ugapp-integratorsb2b.herokuapp.com/api/ug/transcript/type",
+                { response -> handleResponse(response) },
+                { error -> handleError(error) })
+
+        view.showWait()
+        requestQueue.add(request)
+    }
+
+    fun fetchConfigs() {
+        val requestQueue = Volley.newRequestQueue(context)
+        val request = StringRequest(Request.Method.GET,
+                "https://ugapp-integratorsb2b.herokuapp.com/api/ug/transcript/type",
+                { response -> handleResponse(response) },
+                { error -> handleError(error) })
+
+        view.showWait()
+        requestQueue.add(request)
+    }
+
+    private fun handleError(error: VolleyError) {
+        view.showConnectionError()
+    }
+
+    private lateinit var deliveryChoices: ArrayList<DeliveryChoice>
+
+    private fun handleResponse(response: String) {
+        view.hideWait()
+
+        deliveryChoices = Gson().fromJson(response)
+        val pLocations = ArrayList<String>(deliveryChoices.size)
+        deliveryChoices.mapTo(pLocations, { it.name })
+
+        view.setDeliveryChoices(pLocations)
+    }
+
+    private lateinit var location: String
+
+    override fun setSelectedLocation(location: String) {
+        this.location = location
+    }
+
+    override fun setSelectedDeliveryChoice(choice: String) {
+        val locations: ArrayList<String> = ArrayList()
+        deliveryType = choice
+        for (d in deliveryChoices) {
+            if (d.name == choice) {
+                d.location.mapTo(locations, { it.key })
+                view.setPostalOptions(locations)
+
+                if (d.name.toLowerCase().contains("post")) {
+                    view.showPostalForm()
+                } else {
+                    view.hidePostalForm()
+                }
+
+                return
+            }
+        }
     }
 
     override fun next() {
         val payload = Payload("transcript")
 
-        if (!Util.isValidStudentNumber(studentNumber) || deliveryChoice == 0) {
+        if (!Util.isValidStudentNumber(studentNumber)) {
             view.showFormError()
             return
         }
-        // check for the delivery
-        var deliveryType = "pickup"
-        if (deliveryChoice == R.id.post) {
+
+        if (deliveryType.toLowerCase().contains("post")) {
             if (!Util.isValidPostalAddress(postalAddress)) {
-                view.showPostalAddressNotSpecifiedError()
+                view.showFormError()
                 return
             }
 
-            deliveryType = "delivery"
+            payload.form.put("address", postalAddress.get())
         }
 
-        payload.form.put("indexNumber", studentNumber.get().trim())
-        payload.form.put("deliveryChoice", deliveryType)
+        payload.form.put("deliveryType", deliveryType)
+        payload.form.put("location", location)
 
-        if (deliveryChoice == R.id.post) {
-            payload.form.put("postalAddress", postalAddress.get())
-        }
-        view.showConfirmation(payload)
-    }
-
-    private fun setDeliveryChoice(checkedId: Int) {
-        deliveryChoice = checkedId
-        if (checkedId == R.id.post) view.showPostalForm()
-        else view.hidePostalForm()
-
-        // show the tap
-        shouldTap()
-    }
-
-    private fun shouldTap() {
-        val postalAddress = this.postalAddress.get()
-
-        if (!Util.isValidStudentNumber(this.studentNumber)) {
-            return
-        }
-
-        if (deliveryChoice == R.id.post && postalAddress == null) {
-            return
-        }
-
-        val studentNumber = this.studentNumber.get()
-        // showing tap is reliant on the student number being supplied
-        if (studentNumber.length > 3) {
-            when (deliveryChoice) {
-                R.id.post -> confirmShowTap(postalAddress.length > 4)
-                R.id.pickup -> confirmShowTap(true)
+        // now add the charges
+        for (d in deliveryChoices) {
+            if (d.name == deliveryType) {
+                for (l in d.location) {
+                    if (l.key == location) {
+                        payload.form.put("actualCharge", l.actualCharge)
+                        payload.form.put("serviceCharge", l.serviceCharge)
+                        payload.form.put("postalCharge", l.postalCharge)
+                    }
+                }
             }
         }
+
+        // check for the delivery
+        view.showPayment(payload)
     }
 
-    private fun confirmShowTap(show: Boolean) {
-        if (show && !alreadyShown) {
-            view.showNextTap()
-            alreadyShown = true
-        }
-    }
+    class Location(val key: String, val actualCharge: Double, val serviceCharge: Double,
+                   val postalCharge: Double)
 
-    val deliveryChoiceListener: RadioGroup.OnCheckedChangeListener =
-            RadioGroup.OnCheckedChangeListener { _, checkedId -> setDeliveryChoice(checkedId) }
-
-    val onTextChanged: TextWatcher = object : TextWatcher {
-        override fun afterTextChanged(s: Editable?) {
-
-        }
-
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-        }
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            shouldTap()
-        }
-
-    }
+    class DeliveryChoice(val name: String, val location: ArrayList<Location>)
 }

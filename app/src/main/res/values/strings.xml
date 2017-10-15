@@ -55,4 +55,7 @@
     <string name="follow_up_mobile_number">10-digit follow-up mobile number</string>
     <string name="send">Send</string>
     <string name="sending_please_wait">Sending. Please wait...</string>
+    <string name="continent_province">Continent/Province</string>
+    <string name="location">Location</string>
+    <string name="delivery_choice">Delivery Choice</string>
 </resources>
