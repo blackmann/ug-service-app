@@ -35,11 +35,11 @@ class TranscriptConfirmationFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val payload = arguments[payloadExtra] as Payload
-        val deliveryChoice = payload.form["deliveryChoice"] as String
+        val deliveryType = payload.form["deliveryType"] as String
         view?.findViewById<RadioButton>(R.id.delivery_choice)
-                ?.setText(deliveryChoice.capitalize())
+                ?.setText(deliveryType.capitalize())
 
-        if (deliveryChoice == "delivery") {
+        if (deliveryType.toLowerCase().contains("post")) {
             view?.findViewById<TextView>(R.id.postal_address)
                     ?.setText(payload.form["postalAddress"] as String)
         } else {

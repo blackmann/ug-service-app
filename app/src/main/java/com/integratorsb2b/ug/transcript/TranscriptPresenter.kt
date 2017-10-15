@@ -94,6 +94,8 @@ class TranscriptPresenter(private val context: Context,
             return
         }
 
+        payload.form.put("indexNumber", studentNumber.get())
+
         if (deliveryType.toLowerCase().contains("post")) {
             if (!Util.isValidPostalAddress(postalAddress)) {
                 view.showFormError()
@@ -120,7 +122,7 @@ class TranscriptPresenter(private val context: Context,
         }
 
         // check for the delivery
-        view.showPayment(payload)
+        view.showConfirmation(payload)
     }
 
     class Location(val key: String, val actualCharge: Double, val serviceCharge: Double,

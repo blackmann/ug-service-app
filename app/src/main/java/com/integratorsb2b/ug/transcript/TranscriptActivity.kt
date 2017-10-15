@@ -115,8 +115,8 @@ class TranscriptActivity : AppCompatActivity(), TranscriptContract.View {
         Handler().postDelayed({ tapTarget.finish() }, 2500)
     }
 
-    override fun showPayment(payload: Payload?) {
-        PaymentActivity.start(this, payload)
+    override fun showConfirmation(payload: Payload?) {
+        ConfirmationActivity.start(this, payload)
     }
 
     private lateinit var presenter: TranscriptContract.Presenter
