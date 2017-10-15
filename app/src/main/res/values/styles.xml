@@ -9,6 +9,10 @@
         <item name="android:textSize">15sp</item>
     </style>
 
+    <style name="NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:background">#fff</item>
+    </style>
+
     <style name="AppTheme.Title" parent="AppTheme">
         <item name="android:textSize">20sp</item>
     </style>
