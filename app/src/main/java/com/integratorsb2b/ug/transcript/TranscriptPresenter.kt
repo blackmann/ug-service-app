@@ -109,6 +109,7 @@ class TranscriptPresenter(private val context: Context,
                         payload.form.put("actualCharge", l.actualCharge)
                         payload.form.put("serviceCharge", l.serviceCharge)
                         payload.form.put("postalCharge", l.postalCharge)
+                        payload.form.put("key", l.key)
                     }
                 }
             }

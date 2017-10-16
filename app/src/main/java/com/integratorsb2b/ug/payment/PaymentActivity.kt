@@ -113,8 +113,6 @@ class PaymentActivity : AppCompatActivity(), PaymentContract.View {
     }
 
     override fun showReceipt() {
-        Log.i("data", payload.form.toString())
-
         val dialogView: View = layoutInflater.inflate(R.layout.payment_confirm, null)
 
         val bottomSheet = BottomSheetDialog(this)
@@ -145,7 +143,43 @@ class PaymentActivity : AppCompatActivity(), PaymentContract.View {
         val requestQueue = Volley.newRequestQueue(this)
         val request = object : StringRequest(Request.Method.POST,
                 "https://ugapp-integratorsb2b.herokuapp.com/api/ug/resit/payment",
-                { response -> handleResitResponse(response) },
+                { response -> handleResitResponse(response, "resit") },
+                { error -> handleError(error) }) {
+            override fun getParams(): MutableMap<String, String> {
+                val params = HashMap<String, String>()
+                for (c in payload.form.keys) {
+                    params.put(c, payload.form[c].toString())
+                }
+
+                Log.i("data", params.toString())
+                return params
+            }
+        }
+
+        dialog = AlertDialog.Builder(this)
+                .setView(R.layout.view_sending)
+                .create()
+
+        dialog?.show()
+
+        requestQueue.add(request)
+    }
+
+    private fun sendTranscriptForm(payload: Payload) {
+        val applicationType = HashMap<String, Any?>()
+        applicationType.put("serviceCharge", payload.form["serviceCharge"])
+        applicationType.put("actualCharge", payload.form["actualCharge"])
+        applicationType.put("postalCharge", payload.form["postalCharge"])
+        applicationType.put("key", payload.form["key"])
+
+        val applicationTypeList = ArrayList<HashMap<String, Any?>>()
+        applicationTypeList.add(applicationType)
+        payload.form.put("applicationType", applicationTypeList)
+
+        val requestQueue = Volley.newRequestQueue(this)
+        val request = object : StringRequest(Request.Method.POST,
+                "https://ugapp-integratorsb2b.herokuapp.com/api/ug/transcript/payment",
+                { response -> handleResitResponse(response, "transcript") },
                 { error -> handleError(error) }) {
             override fun getParams(): MutableMap<String, String> {
                 val params = HashMap<String, String>()
@@ -172,6 +206,8 @@ class PaymentActivity : AppCompatActivity(), PaymentContract.View {
 
         if (payload.type == "resit") {
             sendResitForm(payload)
+        } else {
+            sendTranscriptForm(payload)
         }
     }
 
@@ -181,13 +217,13 @@ class PaymentActivity : AppCompatActivity(), PaymentContract.View {
                 .show()
     }
 
-    private fun handleResitResponse(response: String) {
+    private fun handleResitResponse(response: String, purpose: String) {
         dialog?.dismiss()
 
         // show some message
         AlertDialog.Builder(this)
                 .setTitle("Request Sent")
-                .setMessage("Your resit request has been sent. You will receive a notification with " +
+                .setMessage("Your $purpose request has been sent. You will receive a notification with " +
                         "your registration code shortly. Thank you.")
                 .setPositiveButton(android.R.string.ok, { dialogInterface, _ ->
                     dialogInterface.dismiss()
@@ -214,6 +250,8 @@ class PaymentActivity : AppCompatActivity(), PaymentContract.View {
         PaymentPresenter(this, this)
 
         presenter.setPayload(payload)
+
+        Log.i("Payload", payload.form.toString())
 
         val binding: ActivityPaymentBinding =
                 DataBindingUtil.setContentView(this, R.layout.activity_payment)

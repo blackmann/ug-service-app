@@ -155,7 +155,7 @@ class ConfirmationActivity : AppCompatActivity() {
 
     private fun showPaymentScreen() {
         payload.form.put("serviceCharge", serviceCharge)
-        payload.form.put("totalAmount", totalAmount)
+        payload.form.put("totalAmount", totalAmount+serviceCharge)
         PaymentActivity.start(this, payload)
     }
 
