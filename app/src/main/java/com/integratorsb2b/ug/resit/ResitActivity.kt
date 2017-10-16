@@ -16,6 +16,11 @@ import com.jaredrummler.materialspinner.MaterialSpinner
 
 class ResitActivity : AppCompatActivity(), ResitContract.View {
 
+    override fun showInvalidMobileNumber() {
+        Toast.makeText(this, "Please provide your contact mobile number", Toast.LENGTH_SHORT)
+                .show()
+    }
+
     override fun showNoStudentNumberError() {
         Toast.makeText(this, "Please provide a valid student number", Toast.LENGTH_SHORT)
                 .show()

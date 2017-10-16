@@ -4,7 +4,6 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
@@ -12,12 +11,16 @@ import com.integratorsb2b.ug.Payload
 import com.integratorsb2b.ug.R
 import com.integratorsb2b.ug.confirmation.ConfirmationActivity
 import com.integratorsb2b.ug.databinding.ActivityTranscriptBinding
-import com.integratorsb2b.ug.payment.PaymentActivity
 import com.jaredrummler.materialspinner.MaterialSpinner
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
 
 
 class TranscriptActivity : AppCompatActivity(), TranscriptContract.View {
+
+    override fun showInvalidMobileNumber() {
+        Toast.makeText(this, "Please provide your contact mobile number", Toast.LENGTH_SHORT)
+                .show()
+    }
 
     // also known as the locations
     override fun setPostalOptions(options: ArrayList<String>) {

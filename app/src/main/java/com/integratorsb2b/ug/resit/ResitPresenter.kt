@@ -9,6 +9,7 @@ import com.github.salomonbrys.kotson.fromJson
 import com.google.gson.Gson
 import com.integratorsb2b.ug.Payload
 import com.integratorsb2b.ug.Util
+import java.util.regex.Pattern
 
 class ResitPresenter(private val context: Context,
                      private val view: ResitContract.View) : ResitContract.Presenter {
@@ -16,6 +17,7 @@ class ResitPresenter(private val context: Context,
     var unitCost: ObservableField<String> = ObservableField()
     var creditHours: ObservableField<String> = ObservableField("1")
     var studentNumber: ObservableField<String> = ObservableField()
+    var mobileNumber: ObservableField<String> = ObservableField()
 
     private lateinit var selectedLevel: String
     private lateinit var selectedProgramme: String
@@ -78,10 +80,16 @@ class ResitPresenter(private val context: Context,
             return
         }
 
+        if (!Pattern.matches("\\d{10}", mobileNumber.get())) {
+            view.showInvalidMobileNumber()
+            return
+        }
+
         payload.form.put("creditHours", creditHours.get().toInt())
         payload.form.put("category", selectedLevel)
         payload.form.put("indexNumber", studentNumber.get())
         payload.form.put("charge", getCharge())
+        payload.form.put("phoneNumber", mobileNumber.get())
 
         // always set the faculty last, since the categoryId is obtained after
         // getting the charge (.getCharge())

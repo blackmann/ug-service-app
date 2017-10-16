@@ -27,7 +27,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.POST
-import java.util.regex.Pattern
 
 
 class PaymentActivity : AppCompatActivity(), PaymentContract.View {
@@ -126,24 +125,11 @@ class PaymentActivity : AppCompatActivity(), PaymentContract.View {
         bottomSheet.setContentView(dialogView)
         bottomSheet.show()
 
-        val followUpNumberEntry = bottomSheet.findViewById<EditText>(R.id.follow_up_number)
         dialogView.findViewById<Button>(R.id.send)
                 .setOnClickListener({
-                    addFollowUpNumberAndSend(followUpNumberEntry?.text.toString())
+                    sendForm(payload)
                     bottomSheet.dismiss()
                 })
-    }
-
-    private fun addFollowUpNumberAndSend(entry: String) {
-        if (!Pattern.matches("\\d{10}", entry)) {
-            Toast.makeText(this, "Please enter a valid phone number.", Toast.LENGTH_SHORT)
-                    .show()
-            return
-        }
-
-        payload.form.put("phoneNumber", entry)
-
-        sendForm(payload)
     }
 
     private fun sendResitForm(payload: Payload) {

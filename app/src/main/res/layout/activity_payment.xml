@@ -90,6 +90,7 @@
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:maxLength="16"
                             android:text="@={presenter.cardNumber}"
                             android:layout_marginBottom="@dimen/margin_8"
                             android:inputType="numberSigned" />

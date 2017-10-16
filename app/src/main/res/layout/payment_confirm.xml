@@ -23,13 +23,6 @@
         android:layout_height="wrap_content"
         android:text="@string/finish_info" />
 
-    <EditText
-        android:id="@+id/follow_up_number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/follow_up_mobile_number"
-        android:inputType="phone" />
-
     <Button
         android:id="@+id/send"
         style="@style/Base.Widget.AppCompat.Button.Colored"

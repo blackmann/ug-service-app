@@ -22,5 +22,6 @@ interface ResitContract {
         fun hideRetryControl()
         fun showNoStudentNumberError()
         fun showInvalidCreditHoursError()
+        fun showInvalidMobileNumber()
     }
 }

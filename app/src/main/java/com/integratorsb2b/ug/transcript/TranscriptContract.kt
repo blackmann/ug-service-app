@@ -23,5 +23,6 @@ interface TranscriptContract {
         fun showConnectionError()
         fun setPostalOptions(options: ArrayList<String>)
         fun setDeliveryChoices(locations: ArrayList<String>)
+        fun showInvalidMobileNumber()
     }
 }

@@ -96,9 +96,22 @@
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/margin_8"
                             android:inputType="textPostalAddress|textMultiLine"
                             android:text="@={presenter.postalAddress}" />
                     </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mobile_number"
+                        style="@style/AppTheme.Label"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:text="@={presenter.mobileNumber}"/>
 
                 </LinearLayout>
             </ScrollView>

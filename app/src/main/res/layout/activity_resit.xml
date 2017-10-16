@@ -103,7 +103,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@={presenter.studentNumber}"
-                        android:inputType="text" />
+                        android:inputType="text"
+                        android:layout_marginBottom="@dimen/margin_8"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/AppTheme.Label"
+                        android:text="@string/mobile_number"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:text="@={presenter.mobileNumber}"/>
 
                 </LinearLayout>
             </ScrollView>

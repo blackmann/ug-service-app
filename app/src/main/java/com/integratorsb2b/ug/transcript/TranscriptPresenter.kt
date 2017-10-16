@@ -10,6 +10,7 @@ import com.github.salomonbrys.kotson.fromJson
 import com.google.gson.Gson
 import com.integratorsb2b.ug.Payload
 import com.integratorsb2b.ug.Util
+import java.util.regex.Pattern
 
 
 class TranscriptPresenter(private val context: Context,
@@ -18,6 +19,7 @@ class TranscriptPresenter(private val context: Context,
     private lateinit var deliveryType: String
     var studentNumber: ObservableField<String> = ObservableField()
     var postalAddress: ObservableField<String> = ObservableField()
+    var mobileNumber: ObservableField<String> = ObservableField()
 
     init {
         view.setPresenter(this)
@@ -87,6 +89,12 @@ class TranscriptPresenter(private val context: Context,
             return
         }
 
+        if (!Pattern.matches("\\d{10}", mobileNumber.get())) {
+            view.showInvalidMobileNumber()
+            return
+        }
+
+        payload.form.put("phoneNumber", mobileNumber.get())
         payload.form.put("indexNumber", studentNumber.get())
 
         if (deliveryType.toLowerCase().contains("post")) {
