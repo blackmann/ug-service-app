@@ -37,4 +37,6 @@ dependencies {
     compile 'com.jaredrummler:material-spinner:1.2.1'
     compile 'com.android.volley:volley:1.0.0'
     compile 'com.github.salomonbrys.kotson:kotson:2.5.0'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
 }

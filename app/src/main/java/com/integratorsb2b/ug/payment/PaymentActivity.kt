@@ -20,6 +20,13 @@ import com.integratorsb2b.ug.R
 import com.integratorsb2b.ug.databinding.ActivityPaymentBinding
 import com.integratorsb2b.ug.home.MainActivity
 import com.jaredrummler.materialspinner.MaterialSpinner
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
+import retrofit2.http.POST
 import java.util.regex.Pattern
 
 
@@ -176,29 +183,28 @@ class PaymentActivity : AppCompatActivity(), PaymentContract.View {
         applicationTypeList.add(applicationType)
         payload.form.put("applicationType", applicationTypeList)
 
-        val requestQueue = Volley.newRequestQueue(this)
-        val request = object : StringRequest(Request.Method.POST,
-                "https://ugapp-integratorsb2b.herokuapp.com/api/ug/transcript/payment",
-                { response -> handleResitResponse(response, "transcript") },
-                { error -> handleError(error) }) {
-            override fun getParams(): MutableMap<String, String> {
-                val params = HashMap<String, String>()
-                for (c in payload.form.keys) {
-                    params.put(c, payload.form[c].toString())
-                }
+        val retro = Retrofit.Builder().baseUrl("https://ugapp-integratorsb2b.herokuapp.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
 
-                Log.i("data", params.toString())
-                return params
-            }
-        }
+        retro.create(TranscriptEnd::class.java)
+                .send(payload.form)
+                .enqueue(object: Callback<Void> {
+                    override fun onResponse(call: Call<Void>?, response: Response<Void>?) {
+                        handleResitResponse("", "transcript")
+                    }
+
+                    override fun onFailure(call: Call<Void>?, t: Throwable?) {
+                        handleError(null)
+                    }
+
+                })
 
         dialog = AlertDialog.Builder(this)
                 .setView(R.layout.view_sending)
                 .create()
 
         dialog?.show()
-
-        requestQueue.add(request)
     }
 
     private fun sendForm(payload: Payload?) {
@@ -211,7 +217,7 @@ class PaymentActivity : AppCompatActivity(), PaymentContract.View {
         }
     }
 
-    private fun handleError(error: VolleyError) {
+    private fun handleError(error: VolleyError?) {
         dialog?.dismiss()
         Toast.makeText(this, "Connection failed. Please try again.", Toast.LENGTH_SHORT)
                 .show()
@@ -282,5 +288,11 @@ class PaymentActivity : AppCompatActivity(), PaymentContract.View {
             android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    interface TranscriptEnd {
+
+        @POST("api/ug/transcript/payment")
+        fun send(@Body body: HashMap<String, Any>): Call<Void>
     }
 }
