@@ -78,7 +78,7 @@ class PaymentActivity : AppCompatActivity(), PaymentContract.View {
     }
 
     override fun showExpiryError() {
-        Toast.makeText(this, "Please enter the expiry of your card in the format MM/YY; eg 09/17",
+        Toast.makeText(this, "Please enter a valid expiry of your card in the format MM/YY; eg 09/17",
                 Toast.LENGTH_LONG).show()
     }
 

@@ -40,8 +40,8 @@ class PaymentPresenter(private val context: Context, private val view: PaymentCo
         val requestQueue = Volley.newRequestQueue(context)
 
         val request = StringRequest(Request.Method.GET, "https://ugapp-integratorsb2b.herokuapp.com/api/ug/paymentoption",
-                {response -> handleResponse(response) },
-                {error -> handleError(error)})
+                { response -> handleResponse(response) },
+                { error -> handleError(error) })
 
         requestQueue.add(request)
     }
@@ -120,7 +120,17 @@ class PaymentPresenter(private val context: Context, private val view: PaymentCo
     }
 
     private fun isValidExpiry(): Boolean {
-        return expiry.get() != null && Pattern.matches("\\d{2}/\\d{2}", expiry.get())
+        if (expiry.get() != null) {
+            if (!Pattern.matches("\\d{2}/\\d{2}", expiry.get())) {
+                return false
+            }
+
+            val month = expiry.get().split("/")[0].toInt()
+            val year = expiry.get().split("/")[1].toInt()
+
+            return month in 1..12 && year > 16
+        }
+        return false
     }
 
     private fun processMomoForm(paymentChoice: String) {
