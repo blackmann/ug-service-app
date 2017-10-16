@@ -45,6 +45,8 @@
                         style="@style/AppTheme.Label"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_student"
+                        android:drawablePadding="@dimen/margin_16"
                         android:paddingBottom="@dimen/margin_8"
                         android:text="@string/student_number" />
 
@@ -60,18 +62,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/margin_8"
+                        android:drawableLeft="@drawable/ic_deliver"
+                        android:drawablePadding="@dimen/margin_16"
                         android:text="@string/delivery_choice" />
 
                     <com.jaredrummler.materialspinner.MaterialSpinner
                         android:id="@+id/delivery_choice"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_16"/>
 
                     <TextView
                         style="@style/AppTheme.Label"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/margin_8"
+                        android:drawableLeft="@drawable/ic_location"
+                        android:drawablePadding="@dimen/margin_16"
                         android:text="@string/location" />
 
                     <com.jaredrummler.materialspinner.MaterialSpinner
@@ -105,6 +112,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/mobile_number"
+                        android:drawableLeft="@drawable/ic_phone"
+                        android:drawablePadding="@dimen/margin_16"
                         style="@style/AppTheme.Label"/>
 
                     <EditText
