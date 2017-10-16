@@ -44,6 +44,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingBottom="@dimen/margin_8"
+                        android:drawableLeft="@drawable/ic_student"
+                        android:drawablePadding="@dimen/margin_16"
                         style="@style/AppTheme.Label"
                         android:text="@string/level" />
 
@@ -51,20 +53,22 @@
                         android:id="@+id/levels"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/margin_8" />
+                        android:layout_marginBottom="@dimen/margin_16" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingBottom="@dimen/margin_8"
                         style="@style/AppTheme.Label"
+                        android:drawableLeft="@drawable/ic_programme"
+                        android:drawablePadding="@dimen/margin_16"
                         android:text="@string/type_of_programme" />
 
                     <com.jaredrummler.materialspinner.MaterialSpinner
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/programmes"
-                        android:layout_marginBottom="@dimen/margin_8" />
+                        android:layout_marginBottom="@dimen/margin_16" />
 
 
                     <TextView
@@ -77,12 +81,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:paddingBottom="@dimen/margin_8">
+                        android:layout_marginBottom="@dimen/margin_16">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             style="@style/AppTheme.Label"
+                            android:drawableLeft="@drawable/ic_time"
+                            android:drawablePadding="@dimen/margin_16"
                             android:paddingRight="@dimen/margin_16"
                             android:text="@string/number_of_credit_hours" />
 
@@ -96,6 +102,8 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_id"
+                        android:drawablePadding="@dimen/margin_16"
                         style="@style/AppTheme.Label"
                         android:text="@string/student_number" />
 
@@ -104,12 +112,14 @@
                         android:layout_height="wrap_content"
                         android:text="@={presenter.studentNumber}"
                         android:inputType="text"
-                        android:layout_marginBottom="@dimen/margin_8"/>
+                        android:layout_marginBottom="@dimen/margin_16"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         style="@style/AppTheme.Label"
+                        android:drawableLeft="@drawable/ic_phone"
+                        android:drawablePadding="@dimen/margin_16"
                         android:text="@string/mobile_number"/>
 
                     <EditText
