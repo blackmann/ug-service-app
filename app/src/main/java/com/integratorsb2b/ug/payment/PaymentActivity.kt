@@ -18,6 +18,7 @@ import com.android.volley.toolbox.Volley
 import com.integratorsb2b.ug.Payload
 import com.integratorsb2b.ug.R
 import com.integratorsb2b.ug.databinding.ActivityPaymentBinding
+import com.integratorsb2b.ug.home.MainActivity
 import com.jaredrummler.materialspinner.MaterialSpinner
 import java.util.regex.Pattern
 
@@ -140,13 +141,11 @@ class PaymentActivity : AppCompatActivity(), PaymentContract.View {
         sendForm(payload)
     }
 
-    private fun sendForm(payload: Payload?) {
-        if (payload == null) return
-
+    private fun sendResitForm(payload: Payload) {
         val requestQueue = Volley.newRequestQueue(this)
         val request = object : StringRequest(Request.Method.POST,
                 "https://ugapp-integratorsb2b.herokuapp.com/api/ug/resit/payment",
-                { response -> handleResponse(response) },
+                { response -> handleResitResponse(response) },
                 { error -> handleError(error) }) {
             override fun getParams(): MutableMap<String, String> {
                 val params = HashMap<String, String>()
@@ -168,14 +167,41 @@ class PaymentActivity : AppCompatActivity(), PaymentContract.View {
         requestQueue.add(request)
     }
 
+    private fun sendForm(payload: Payload?) {
+        if (payload == null) return
+
+        if (payload.type == "resit") {
+            sendResitForm(payload)
+        }
+    }
+
     private fun handleError(error: VolleyError) {
         dialog?.dismiss()
         Toast.makeText(this, "Connection failed. Please try again.", Toast.LENGTH_SHORT)
                 .show()
     }
 
-    private fun handleResponse(response: String) {
+    private fun handleResitResponse(response: String) {
         dialog?.dismiss()
+
+        // show some message
+        AlertDialog.Builder(this)
+                .setTitle("Request Sent")
+                .setMessage("Your resit request has been sent. You will receive a notification with " +
+                        "your registration code shortly. Thank you.")
+                .setPositiveButton(android.R.string.ok, { dialogInterface, _ ->
+                    dialogInterface.dismiss()
+                    continueHome()
+                })
+                .create()
+                .show()
+    }
+
+    private fun continueHome() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+        startActivity(intent)
     }
 
     override fun setPresenter(presenter: PaymentContract.Presenter) {
