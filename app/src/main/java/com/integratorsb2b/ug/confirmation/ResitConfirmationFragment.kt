@@ -34,7 +34,7 @@ class ResitConfirmationFragment : Fragment() {
 
         val payload = arguments[payloadExtra] as Payload
 
-        view?.findViewById<TextView>(R.id.faculty)?.setText(payload.form["faculty"] as String)
+        view?.findViewById<TextView>(R.id.faculty)?.setText(payload.form["facultyName"] as String)
         view?.findViewById<TextView>(R.id.level)?.setText(payload.form["category"] as String)
 
         view?.findViewById<TextView>(R.id.credit_hours)

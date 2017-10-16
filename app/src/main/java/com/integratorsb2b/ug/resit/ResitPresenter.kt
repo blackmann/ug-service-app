@@ -19,6 +19,7 @@ class ResitPresenter(private val context: Context,
 
     private lateinit var selectedLevel: String
     private lateinit var selectedProgramme: String
+    private lateinit var categoryId: String // messed up api I'm working with
     private var retries = 0
 
     private val chargesRequestTag = "charges_t_"
@@ -54,6 +55,8 @@ class ResitPresenter(private val context: Context,
         if (chargeList != null) {
             for (c in chargeList) {
                 if (c.facultyName == selectedProgramme) {
+                    // set the id of the selected category for form submission
+                    categoryId = c.category
                     return c.creditCharges[0].price
                 }
             }
@@ -76,16 +79,21 @@ class ResitPresenter(private val context: Context,
         }
 
         payload.form.put("creditHours", creditHours.get().toInt())
-        payload.form.put("faculty", selectedProgramme)
         payload.form.put("category", selectedLevel)
         payload.form.put("indexNumber", studentNumber.get())
         payload.form.put("charge", getCharge())
+
+        // always set the faculty last, since the categoryId is obtained after
+        // getting the charge (.getCharge())
+        payload.form.put("faculty", categoryId)
+
+        // this is used for details page
+        payload.form.put("facultyName", selectedProgramme)
+
         view.showConfirmation(payload)
     }
 
     override fun begin() {
-//        view.setProgrammeOptions(arrayOf("Humanities", "Sciences", "Administration", "Agriculture"))
-//        view.setLevelOptions(arrayOf("Undergraduate", "Post Graduate", "Foreign"))
         fetchConfigs()
     }
 
@@ -122,7 +130,7 @@ class ResitPresenter(private val context: Context,
             val request = StringRequest(Request.Method.GET,
                     "http://ugapp-integratorsb2b.herokuapp.com/api/ug/resit/faculty/charges/" + c._id,
                     { response -> handleChargesResponse(response, c) },
-                    { error -> handleChargesError(requestQueue) })
+                    { _ -> handleChargesError(requestQueue) })
 
             request.tag = chargesRequestTag
             requestQueue.add(request)
