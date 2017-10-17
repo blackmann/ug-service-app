@@ -8,7 +8,8 @@ import android.content.Intent
 import android.os.Build
 import android.os.IBinder
 import android.support.v4.app.NotificationCompat
-import android.util.Log
+import com.github.salomonbrys.kotson.fromJson
+import com.google.gson.Gson
 import com.integratorsb2b.ug.R
 import com.pusher.client.Pusher
 import com.pusher.client.PusherOptions
@@ -30,30 +31,32 @@ class NotificationService : Service() {
             return super.onStartCommand(intent, flags, startId)
         }
 
-        Log.i("NotificationService", "Success and continuing...")
-
         val options = PusherOptions()
         options.setCluster("eu")
 
         pusher = Pusher("23cad76055fb80ffa985", options)
-        pusher.subscribe(indexNumber).bind("PaymentPending") { channelName, eventName, data ->
-            createNotification(data)
-        }
+        pusher.connect()
 
-        return START_REDELIVER_INTENT
+        pusher.subscribe(indexNumber).bind("PaymentStatus", { channelName, eventName, data ->
+            createNotification(data)
+        })
+
+        return super.onStartCommand(intent, flags, startId)
     }
 
     private fun createNotification(data: String) {
-        Log.i("NS", "About to create...")
-
         if (indexNumber == null) return
-        Log.i("NS", "Creating notification")
 
+        // this is required for devices from N
         createNotificationChannel()
+
+        val dataObj = Gson().fromJson<HashMap<String, String>>(data)
+        var message: String? = dataObj["message"]
+        if (message == null) message = "Notification received"
 
         val notificationBuilder = NotificationCompat.Builder(this, indexNumber!!)
         notificationBuilder.setContentTitle("University of Ghana")
-        notificationBuilder.setContentText("Notification received")
+        notificationBuilder.setContentText(message)
         notificationBuilder.setSmallIcon(R.drawable.ic_notification_icon)
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

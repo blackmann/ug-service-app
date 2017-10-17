@@ -21,7 +21,7 @@ class ResitPresenter(private val context: Context,
 
     private lateinit var selectedLevel: String
     private lateinit var selectedProgramme: String
-    private lateinit var categoryId: String // messed up api I'm working with
+    private lateinit var facultyId: String // messed up api I'm working with
     private var retries = 0
 
     private val chargesRequestTag = "charges_t_"
@@ -58,7 +58,7 @@ class ResitPresenter(private val context: Context,
             for (c in chargeList) {
                 if (c.facultyName == selectedProgramme) {
                     // set the id of the selected category for form submission
-                    categoryId = c.category
+                    facultyId = c._id
                     return c.creditCharges[0].price
                 }
             }
@@ -91,9 +91,9 @@ class ResitPresenter(private val context: Context,
         payload.form.put("charge", getCharge())
         payload.form.put("phoneNumber", mobileNumber.get())
 
-        // always set the faculty last, since the categoryId is obtained after
+        // always set the faculty last, since the facultyId is obtained after
         // getting the charge (.getCharge())
-        payload.form.put("faculty", categoryId)
+        payload.form.put("faculty", facultyId)
 
         // this is used for details page
         payload.form.put("facultyName", selectedProgramme)
@@ -169,7 +169,8 @@ class ResitPresenter(private val context: Context,
 
     class CreditCharge(val name: String, val price: Double)
 
-    class Charge(val facultyName: String,
+    class Charge(val _id: String,
+                 val facultyName: String,
                  val category: String,
                  val creditCharges: ArrayList<CreditCharge>)
 }
