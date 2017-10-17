@@ -19,6 +19,7 @@ import com.integratorsb2b.ug.Payload
 import com.integratorsb2b.ug.R
 import com.integratorsb2b.ug.databinding.ActivityPaymentBinding
 import com.integratorsb2b.ug.home.MainActivity
+import com.integratorsb2b.ug.notification.NotificationService
 import com.jaredrummler.materialspinner.MaterialSpinner
 import retrofit2.Call
 import retrofit2.Callback
@@ -136,7 +137,7 @@ class PaymentActivity : AppCompatActivity(), PaymentContract.View {
         val requestQueue = Volley.newRequestQueue(this)
         val request = object : StringRequest(Request.Method.POST,
                 "https://ugapp-integratorsb2b.herokuapp.com/api/ug/resit/payment",
-                { response -> handleResitResponse(response, "resit") },
+                { response -> handleResponse(response, "resit") },
                 { error -> handleError(error) }) {
             override fun getParams(): MutableMap<String, String> {
                 val params = HashMap<String, String>()
@@ -177,7 +178,7 @@ class PaymentActivity : AppCompatActivity(), PaymentContract.View {
                 .send(payload.form)
                 .enqueue(object: Callback<Void> {
                     override fun onResponse(call: Call<Void>?, response: Response<Void>?) {
-                        handleResitResponse("", "transcript")
+                        handleResponse("", "transcript")
                     }
 
                     override fun onFailure(call: Call<Void>?, t: Throwable?) {
@@ -209,8 +210,11 @@ class PaymentActivity : AppCompatActivity(), PaymentContract.View {
                 .show()
     }
 
-    private fun handleResitResponse(response: String, purpose: String) {
+    private fun handleResponse(response: String, purpose: String) {
         dialog?.dismiss()
+        val notificationIntent = Intent(this, NotificationService::class.java)
+        notificationIntent.putExtra("indexNumber", payload.form["indexNumber"] as String)
+        startService(notificationIntent)
 
         // show some message
         AlertDialog.Builder(this)
